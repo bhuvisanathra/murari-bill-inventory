@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
   background-color: #f1f1f1;
+}
+
+.footer li {
+  margin: 0.5rem 0.2rem;
+}
+
+button {
+  /* We cannot select text of button */
+  user-select: none;
+}
+
+label {
+  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 650;
+  color: #112827;
+}
+
+input, select {
+  background-color: #f1f1f1;
+  color: #383838;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
 }

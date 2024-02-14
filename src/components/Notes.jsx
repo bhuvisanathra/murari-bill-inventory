@@ -1,14 +1,15 @@
-import React from 'react'
+import React from "react";
 
 function Notes() {
   return (
     <>
-    <section className='mb-5'>
-        {/* Text area */}
-        <p>Notes to the client....</p>
-    </section>
+      <section className="mt-10 mb-5">
+        <p className="lg:w-1/2 text-justify">
+          Note: Make all cheques payable to Company Name.{" "}
+        </p>
+      </section>
     </>
-  )
+  );
 }
 
-export default Notes
+export default Notes;
