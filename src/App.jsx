@@ -21,6 +21,7 @@ function App() {
   const [clientState, setClientState] = useState("Gujarat");
   const [clientStateCode, setClientStateCode] = useState("GJ-25");
   const [invoiceDate, setInvoiceDate] = useState("02/10/2003");
+  const [list, setList] = useState([]);
 
   // Table UseState
   const [invoiceDetails, setInvoiceDetails] = useState({
@@ -43,7 +44,27 @@ function App() {
     grandTotal: "502",
   });
 
-  // Handle change for invoice Details
+  let totalValue = list.reduce((acc, item) => acc + parseFloat(item.value), 0);
+  let totalDiscount = list.reduce(
+    (acc, item) => acc + parseFloat(item.disc),
+    0
+  );
+
+  let totalAfterDiscount = list.reduce(
+    (acc, item) => acc + parseFloat(item.afterDisc),
+    0
+  );
+
+  let totalCgst = totalAfterDiscount * 0.025;
+  let totalSgst = totalAfterDiscount * 0.025;
+
+  let grandTotal =
+    totalAfterDiscount +
+    totalCgst +
+    totalSgst +
+    parseFloat(invoiceDetails.shippingCharges) +
+    parseFloat(invoiceDetails.roundOff);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInvoiceDetails((prevState) => ({
@@ -54,6 +75,40 @@ function App() {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const viewObject = () => {
+    const dataToSend = {
+      clientDetails: {
+        clientName: clientName,
+        clientAddress: clientAddress,
+        clientGst: clientGst,
+        clientPos: clientPos,
+        clientState: clientState,
+        clientStateCode: clientStateCode,
+      },
+      paymentMethod: paymentType,
+      invoiceDetails: {
+        totalValue: totalValue,
+        totalDiscount: totalDiscount,
+        totalAfterDiscount: totalAfterDiscount,
+        totalCgst: totalCgst,
+        totalSgst: totalSgst,
+        shippingCharges: invoiceDetails.shippingCharges,
+        roundOff: invoiceDetails.roundOff,
+        grandTotal: grandTotal,
+      },
+      invoiceList: list.map((item) => ({
+        srNo: item.srNo,
+        productDetail: item.productDetail,
+        kgOrGram: item.kgOrGram,
+        rate: item.rate,
+        value: item.value,
+        disc: item.disc,
+        afterDisc: item.afterDisc,
+      })),
+    };
+    console.log(dataToSend);
   };
 
   return (
@@ -71,8 +126,17 @@ function App() {
               clientState={clientState}
               clientStateCode={clientStateCode}
             />
-            <Dates invoiceNo={invoiceNumber} invoiceDate={invoiceDate} />
-            <Table invoiceDetails={invoiceDetails} />
+            <Dates
+              invoiceNo={invoiceNumber}
+              invoiceDate={invoiceDate}
+              paymentMethod={paymentType}
+            />
+            <Table
+              invoiceDetails={invoiceDetails}
+              list={list}
+              totalDiscount={totalDiscount}
+              setList={setList}
+            />
             <Notes />
             <Footer />
             <div className="flex justify-center">
@@ -86,8 +150,6 @@ function App() {
           </div>
         ) : (
           <>
-            {/*Invoice Number, Client Name, Address, State, POS, Customer GST, Date, Product Details(Name, KG, Rate, Discount) */}
-            {/* Name, Address, email, phone, bank name, bank account number, website, client name, client address, invoice number, incouce date, notes */}
             <div className="flex flex-col justify-center">
               <h2 className="font-bold text-3xl mb-5">Add Invoice Details</h2>
 
@@ -219,14 +281,54 @@ function App() {
               {/* Table Form */}
               <TableForm
                 invoiceDetails={invoiceDetails}
+                setInvoiceDetails={setInvoiceDetails}
+                list={list}
+                setList={setList}
                 handleChange={handleChange}
               />
+
+              <article className="md:grid grid-cols-2 gap-10">
+                <div className="flex flex-col">
+                  <label htmlFor="clientName">Shipping Charges</label>
+                  <input
+                    type="number"
+                    name="shippingCharges"
+                    id="shippingCharges"
+                    className="mb-3"
+                    placeholder="Shipping Charges"
+                    autoComplete="off"
+                    value={invoiceDetails.shippingCharges}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label htmlFor="address">Round Off</label>
+                  <input
+                    type="number"
+                    name="roundOff"
+                    id="address"
+                    className="mb-3"
+                    placeholder="Enter address"
+                    autoComplete="off"
+                    value={invoiceDetails.roundOff}
+                    onChange={handleChange}
+                  />
+                </div>
+              </article>
 
               <button
                 onClick={() => setShowInvoice(true)}
                 className="bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
               >
                 Preview Invoice
+              </button>
+
+              <button
+                onClick={viewObject}
+                className="mt-5 bg-blue-500 text-white font-bold py-1 px-1 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
+              >
+                View Object
               </button>
             </div>
           </>
