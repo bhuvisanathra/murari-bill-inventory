@@ -151,7 +151,9 @@ function App() {
         ) : (
           <>
             <div className="flex flex-col justify-center">
-              <h2 className="font-bold text-3xl mb-5">Add Invoice Details</h2>
+              <h2 className="font-bold text-3xl mb-5 border-b-2">
+                Add Invoice Details
+              </h2>
 
               <label htmlFor="paymentType">Payment Type</label>
               <select

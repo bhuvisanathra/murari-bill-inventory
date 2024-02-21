@@ -31,6 +31,9 @@ function TableForm({
   return (
     <>
       <form onSubmit={handleSubmit}>
+        <h3 className="font-bold text-2xl mt-5 mb-5 relative border-b-2">
+          Add Items
+        </h3>
         <article className="md:grid grid-cols-7 gap-8">
           <div className="flex flex-col">
             <label htmlFor="srNo">Sr no</label>
@@ -148,6 +151,9 @@ function TableForm({
       </form>
 
       <div className="overflow-x-auto">
+        <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
+          Selected Items
+        </h3>
         <table className="mt-5 mb-5 w-full">
           <thead>
             <tr className="bg-gray-100 p-1">
