@@ -1,12 +1,16 @@
 import React from "react";
-
+import logo from "../assets/images/logo.png";
 function Header({ handlePrint }) {
   return (
     <>
       <header className="flex flex-col items-center justify-center mb-5 xl:flex-row xl:justify-between">
         <div>
-          <h1 className="font-bold uppercase tracking-wide text-4xl mb-3">
-            Invoicer
+          <h1 className="font-bold uppercase tracking-wide text-3xl mb-3">
+            <img
+              src={logo}
+              className="w-24 h-auto sm:w-32 sm:h-auto md:w-40 md:h-auto lg:w-48 lg:h-auto xl:w-56 xl:h-auto"
+              alt="Logo"
+            />
           </h1>
         </div>
         <div>

@@ -57,10 +57,10 @@ function Table({ invoiceDetails, list, setList, totalDiscount }) {
 
             {/* Remain Same */}
             <tr>
-              <td colSpan="6" className="font-bold bg-gray-100 text-center">
+              <td colSpan="4" className="font-bold bg-gray-100 text-center">
                 Total
               </td>
-              <td className="p-1 text-center">
+              <td colSpan="3" className="p-1 text-center">
                 <span>{total}</span>
               </td>
             </tr>
