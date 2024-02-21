@@ -11,7 +11,9 @@ function ClientDetails({
   return (
     <section className="mt-5">
       <article className="mt-5 flex items-start justify-start">
-        <ul>
+        <ul className="text-sm md:text-base">
+          {" "}
+          {/* Add this line */}
           <h2 className="text-xl uppercase">Client Details</h2>
           {clientName && (
             <li>
