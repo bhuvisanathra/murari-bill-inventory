@@ -147,46 +147,50 @@ function TableForm({
         </div>
       </form>
 
-      <table width="100%" className="mt-5 mb-5">
-        <thead>
-          <tr className="bg-gray-100 p-1">
-            <th>Sr No</th>
-            <th>Product Details</th>
-            <th>KM/GM</th>
-            <th>Rate</th>
-            <th>Value</th>
-            <th>Discount</th>
-            <th>After Discount</th>
-          </tr>
-        </thead>
-
-        {list.map(
-          ({
-            id,
-            srNo,
-            productDetail,
-            kgOrGram,
-            rate,
-            value,
-            disc,
-            afterDisc,
-          }) => (
-            <React.Fragment key={id}>
-              <tbody>
-                <tr className="text-center">
-                  <td>{srNo}</td>
-                  <td>{productDetail}</td>
-                  <td>{kgOrGram}</td>
-                  <td>{rate}</td>
-                  <td>{value}</td>
-                  <td>{disc}</td>
-                  <td>{afterDisc}</td>
+      <div className="overflow-x-auto">
+        <table className="mt-5 mb-5 w-full">
+          <thead>
+            <tr className="bg-gray-100 p-1">
+              <th className="p-1">Sr No</th>
+              <th className="p-1">Product Details</th>
+              <th className="p-1">KM/GM</th>
+              <th className="p-1">Rate</th>
+              <th className="p-1">Value</th>
+              <th className="p-1">Discount</th>
+              <th className="p-1">After Discount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Changable Data */}
+            {list.map(
+              ({
+                id,
+                srNo,
+                productDetail,
+                kgOrGram,
+                rate,
+                value,
+                disc,
+                afterDisc,
+              }) => (
+                <tr
+                  key={id}
+                  className="text-center"
+                  style={{ marginBottom: "5px" }}
+                >
+                  <td className="p-1">{srNo}</td>
+                  <td className="p-1">{productDetail}</td>
+                  <td className="p-1">{kgOrGram}</td>
+                  <td className="p-1">{rate}</td>
+                  <td className="p-1">{value}</td>
+                  <td className="p-1">{disc}</td>
+                  <td className="p-1">{afterDisc}</td>
                 </tr>
-              </tbody>
-            </React.Fragment>
-          )
-        )}
-      </table>
+              )
+            )}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }
