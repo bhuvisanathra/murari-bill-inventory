@@ -156,14 +156,14 @@ function TableForm({
         </h3>
         <table className="mt-5 mb-5 w-full">
           <thead>
-            <tr className="bg-gray-100 p-1">
-              <th className="p-1">Sr No</th>
-              <th className="p-1">Product Details</th>
+            <tr className="bg-gray-100 p-2">
+              <th className="p-1">No</th>
+              <th className="p-1">Product</th>
               <th className="p-1">KM/GM</th>
               <th className="p-1">Rate</th>
               <th className="p-1">Value</th>
               <th className="p-1">Discount</th>
-              <th className="p-1">After Discount</th>
+              <th className="p-1">Value</th>
             </tr>
           </thead>
           <tbody>
