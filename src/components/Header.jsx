@@ -13,7 +13,7 @@ function Header({ handlePrint }) {
             />
           </h1>
         </div>
-        <div>
+        {/* <div>
           <ul className="flex items-center justify-between flex-wrap">
             <li>
               <button
@@ -34,7 +34,7 @@ function Header({ handlePrint }) {
               </button>
             </li>
           </ul>
-        </div>
+        </div> */}
       </header>
     </>
   );

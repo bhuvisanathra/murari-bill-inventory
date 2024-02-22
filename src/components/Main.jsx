@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "./Header.jsx";
 import MainDetails from "./MainDetails";
 import ClientDetails from "./ClientDetails";
@@ -7,42 +7,43 @@ import Table from "./Table";
 import Notes from "./Notes";
 import Footer from "./Footer";
 import TableForm from "./TableForm.jsx";
+import ReactToPrint from "react-to-print";
 
 function Main() {
   const [paymentType, setPaymentType] = useState("Cash");
   const [showInvoice, setShowInvoice] = useState(true);
-  const [clientName, setClientName] = useState("Bhuvnesh Sanathra");
-  const [clientAddress, setClientAddress] = useState(
-    "Acc Road Chayya Porbandar"
-  );
-  const [invoiceNumber, setInvoiceNumber] = useState("1");
+  const [clientName, setClientName] = useState("");
+  const [clientAddress, setClientAddress] = useState("");
+  const [invoiceNumber, setInvoiceNumber] = useState("");
   const [clientGst, setClientGst] = useState("");
   const [clientPos, setClientPos] = useState("");
-  const [clientState, setClientState] = useState("Gujarat");
-  const [clientStateCode, setClientStateCode] = useState("GJ-25");
-  const [invoiceDate, setInvoiceDate] = useState("02/10/2003");
+  const [clientState, setClientState] = useState("");
+  const [clientStateCode, setClientStateCode] = useState("");
+  const [invoiceDate, setInvoiceDate] = useState("");
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
 
+  const componentRef = useRef();
+
   // Table UseState
   const [invoiceDetails, setInvoiceDetails] = useState({
-    srNo: "1",
-    productDetail: "Kachori",
-    kgOrGram: "2",
-    rate: "240",
-    value: "480",
-    disc: "0",
-    afterDisc: "480",
-    total: "480",
-    totalDiscount: "0",
-    totalTaxableValue: "480",
+    srNo: "",
+    productDetail: "",
+    kgOrGram: "",
+    rate: "",
+    value: "",
+    disc: "",
+    afterDisc: "",
+    total: "",
+    totalDiscount: "",
+    totalTaxableValue: "",
     precantageCgst: "2.50%",
-    cgst: "6",
+    cgst: "",
     precantageSgst: "2.50%",
-    sgst: "6",
-    shippingCharges: "0",
-    roundOff: "0",
-    grandTotal: "502",
+    sgst: "",
+    shippingCharges: "",
+    roundOff: "",
+    grandTotal: "",
   });
 
   let totalValue = list.reduce((acc, item) => acc + parseFloat(item.value), 0);
@@ -126,40 +127,50 @@ function Main() {
     <>
       <main className="m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl  bg-white rounded shadow">
         {showInvoice ? (
-          <div>
-            <Header handlePrint={handlePrint} />
-            <MainDetails />
-            <ClientDetails
-              clientName={clientName}
-              clientAddress={clientAddress}
-              clientGst={clientGst}
-              clientPos={clientPos}
-              clientState={clientState}
-              clientStateCode={clientStateCode}
-            />
-            <Dates
-              invoiceNo={invoiceNumber}
-              invoiceDate={invoiceDate}
-              paymentMethod={paymentType}
-            />
-            <Table
-              invoiceDetails={invoiceDetails}
-              list={list}
-              totalDiscount={totalDiscount}
-              setList={setList}
-              sum={sum}
-            />
-            <Notes />
-            <Footer />
-            <div className="flex justify-center">
+          <>
+            <div ref={componentRef} className="p-5">
+              <Header handlePrint={handlePrint} />
+              <MainDetails />
+              <ClientDetails
+                clientName={clientName}
+                clientAddress={clientAddress}
+                clientGst={clientGst}
+                clientPos={clientPos}
+                clientState={clientState}
+                clientStateCode={clientStateCode}
+              />
+              <Dates
+                invoiceNo={invoiceNumber}
+                invoiceDate={invoiceDate}
+                paymentMethod={paymentType}
+              />
+              <Table
+                invoiceDetails={invoiceDetails}
+                list={list}
+                totalDiscount={totalDiscount}
+                setList={setList}
+                sum={sum}
+              />
+              <Notes />
+              <Footer />
+            </div>
+            <div className="flex justify-center gap-2 text-center">
+              <ReactToPrint
+                trigger={() => (
+                  <button className="mt-5 bg-blue-500 text-white font-bold py-2 px-4 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300">
+                    Print/Download
+                  </button>
+                )}
+                content={() => componentRef.current}
+              />
               <button
                 onClick={() => setShowInvoice(false)}
-                className="mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
+                className="mt-5 bg-green-500 text-white font-bold py-2 px-4 rounded shadow border-2 border-green-500 hover:bg-transparent hover:text-green-500 transition-all duration-300"
               >
                 Edit Information
               </button>
             </div>
-          </div>
+          </>
         ) : (
           <>
             <div className="flex flex-col justify-center">

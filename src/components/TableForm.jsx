@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
+import Dialog from "./Dialog";
 
 function TableForm({
   invoiceDetails,
@@ -12,24 +13,36 @@ function TableForm({
   sum,
 }) {
   const [isEdit, setIsEdit] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newItems = {
-      id: uuidv4(),
-      srNo: invoiceDetails.srNo,
-      productDetail: invoiceDetails.productDetail,
-      kgOrGram: invoiceDetails.kgOrGram,
-      rate: invoiceDetails.rate,
-      value: invoiceDetails.kgOrGram * invoiceDetails.rate,
-      disc: invoiceDetails.disc,
-      afterDisc:
-        invoiceDetails.kgOrGram * invoiceDetails.rate - invoiceDetails.disc,
-      total:
-        invoiceDetails.kgOrGram * invoiceDetails.rate - invoiceDetails.disc,
-    };
-    setList([...list, newItems]);
-    setIsEdit(false);
-    console.log(list);
+
+    if (
+      !invoiceDetails.srNo ||
+      !invoiceDetails.productDetail ||
+      !invoiceDetails.kgOrGram ||
+      !invoiceDetails.rate
+    ) {
+      setShowDialog(true);
+    } else {
+      const newItems = {
+        id: uuidv4(),
+        srNo: invoiceDetails.srNo,
+        productDetail: invoiceDetails.productDetail,
+        kgOrGram: invoiceDetails.kgOrGram,
+        rate: invoiceDetails.rate,
+        value: invoiceDetails.kgOrGram * invoiceDetails.rate,
+        disc: invoiceDetails.disc,
+        afterDisc:
+          invoiceDetails.kgOrGram * invoiceDetails.rate - invoiceDetails.disc,
+        total:
+          invoiceDetails.kgOrGram * invoiceDetails.rate - invoiceDetails.disc,
+      };
+      setList([...list, newItems]);
+      setIsEdit(false);
+      console.log(list);
+    }
   };
 
   // Edit Row
@@ -45,6 +58,9 @@ function TableForm({
 
   return (
     <>
+      {showDialog && (
+        <Dialog showDialog={showDialog} setShowDialog={setShowDialog} />
+      )}
       <form onSubmit={handleSubmit}>
         <h3 className="font-bold text-2xl mt-5 mb-5 relative border-b-2">
           Add Items
