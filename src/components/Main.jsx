@@ -8,7 +8,7 @@ import Notes from "./Notes";
 import Footer from "./Footer";
 import TableForm from "./TableForm.jsx";
 
-function App() {
+function Main() {
   const [paymentType, setPaymentType] = useState("Cash");
   const [showInvoice, setShowInvoice] = useState(true);
   const [clientName, setClientName] = useState("Bhuvnesh Sanathra");
@@ -22,6 +22,7 @@ function App() {
   const [clientStateCode, setClientStateCode] = useState("GJ-25");
   const [invoiceDate, setInvoiceDate] = useState("02/10/2003");
   const [list, setList] = useState([]);
+  const [total, setTotal] = useState(0);
 
   // Table UseState
   const [invoiceDetails, setInvoiceDetails] = useState({
@@ -45,6 +46,16 @@ function App() {
   });
 
   let totalValue = list.reduce((acc, item) => acc + parseFloat(item.value), 0);
+
+  let sum = 0;
+  list.forEach(({ afterDisc }) => {
+    const afterDiscValue = parseFloat(afterDisc);
+    if (!isNaN(afterDiscValue)) {
+      sum += afterDiscValue;
+    } else {
+      console.error(`Invalid afterDisc value: ${afterDisc}`);
+    }
+  });
   let totalDiscount = list.reduce(
     (acc, item) => acc + parseFloat(item.disc),
     0
@@ -136,6 +147,7 @@ function App() {
               list={list}
               totalDiscount={totalDiscount}
               setList={setList}
+              sum={sum}
             />
             <Notes />
             <Footer />
@@ -287,6 +299,7 @@ function App() {
                 list={list}
                 setList={setList}
                 handleChange={handleChange}
+                sum={sum}
               />
 
               <article className="md:grid grid-cols-2 gap-10">
@@ -340,4 +353,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;

@@ -1,16 +1,6 @@
 import React from "react";
 
-function Table({ invoiceDetails, list, setList, totalDiscount }) {
-  let total = 0;
-  list.forEach(({ afterDisc }) => {
-    const afterDiscValue = parseFloat(afterDisc);
-    if (!isNaN(afterDiscValue)) {
-      total += afterDiscValue;
-    } else {
-      console.error(`Invalid afterDisc value: ${afterDisc}`);
-    }
-  });
-
+function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
   return (
     <>
       <div className="overflow-x-auto">
@@ -61,7 +51,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount }) {
                 Total
               </td>
               <td colSpan="3" className="p-1 text-center">
-                <span>{total}</span>
+                <span>{sum}</span>
               </td>
             </tr>
 
@@ -86,7 +76,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount }) {
                 Total
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {total}
+                {sum}
               </td>
             </tr>
 
@@ -107,7 +97,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount }) {
                 {invoiceDetails.precantageCgst}
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {total * 0.025}
+                {sum * 0.025}
               </td>
             </tr>
 
@@ -119,7 +109,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount }) {
                 {invoiceDetails.precantageSgst}
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {total * 0.025}
+                {sum * 0.025}
               </td>
             </tr>
 
@@ -153,8 +143,8 @@ function Table({ invoiceDetails, list, setList, totalDiscount }) {
                 Grand Total
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {total +
-                  2 * (total * 0.025) +
+                {sum +
+                  2 * (sum * 0.025) +
                   parseInt(invoiceDetails.shippingCharges) +
                   parseInt(invoiceDetails.roundOff)}
               </td>

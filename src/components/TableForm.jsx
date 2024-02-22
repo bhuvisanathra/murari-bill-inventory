@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 
 function TableForm({
   invoiceDetails,
@@ -7,10 +9,11 @@ function TableForm({
   list,
   setList,
   handleChange,
+  sum,
 }) {
+  const [isEdit, setIsEdit] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newItems = {
       id: uuidv4(),
       srNo: invoiceDetails.srNo,
@@ -25,8 +28,20 @@ function TableForm({
         invoiceDetails.kgOrGram * invoiceDetails.rate - invoiceDetails.disc,
     };
     setList([...list, newItems]);
+    setIsEdit(false);
     console.log(list);
   };
+
+  // Edit Row
+  const editRow = (id) => {
+    const editingRow = list.find((row) => row.id === id);
+    setList(list.filter((row) => row.id != id));
+    setIsEdit(true);
+    setInvoiceDetails(editingRow);
+  };
+
+  // Delete row
+  const deleteRow = (id) => setList(list.filter((row) => row.id != id));
 
   return (
     <>
@@ -145,7 +160,7 @@ function TableForm({
             type="submit"
             className="mb-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
           >
-            Add Item
+            {isEdit ? "Edit Item" : "Add Item"}
           </button>
         </div>
       </form>
@@ -154,7 +169,7 @@ function TableForm({
         <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
           Selected Items
         </h3>
-        <table className="mt-5 mb-5 w-full">
+        <table className="mt-5 mb-5 w-full border-2">
           <thead>
             <tr className="bg-gray-100 p-2">
               <th className="p-1">No</th>
@@ -164,6 +179,9 @@ function TableForm({
               <th className="p-1">Value</th>
               <th className="p-1">Discount</th>
               <th className="p-1">Value</th>
+              <th colSpan="2" className="p-1">
+                Edit
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -191,9 +209,33 @@ function TableForm({
                   <td className="p-1">{value}</td>
                   <td className="p-1">{disc}</td>
                   <td className="p-1">{afterDisc}</td>
+                  <td className="p-1">
+                    <button onClick={() => editRow(id)}>
+                      <FaEdit className="text-blue-600 font-bold text-xl" />
+                    </button>
+                  </td>
+                  <td className="p-1">
+                    <button onClick={() => deleteRow(id)}>
+                      <MdDelete className="text-red-600 font-bold text-xl" />
+                    </button>
+                  </td>
                 </tr>
               )
             )}
+            <tr className="">
+              <td
+                colSpan="5"
+                className="font-bold bg-gray-100 text-center text-xl border-2"
+              >
+                Total
+              </td>
+              <td
+                colSpan="4"
+                className="p-1 text-center font-bold text-xl border-2"
+              >
+                <span>{sum}</span>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
