@@ -143,10 +143,14 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
                 Grand Total
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {sum +
-                  2 * (sum * 0.025) +
-                  parseInt(invoiceDetails.shippingCharges) +
-                  parseInt(invoiceDetails.roundOff)}
+                {isNaN(sum) ||
+                isNaN(parseInt(invoiceDetails.shippingCharges)) ||
+                isNaN(parseInt(invoiceDetails.roundOff))
+                  ? "0"
+                  : sum +
+                    2 * (sum * 0.025) +
+                    parseInt(invoiceDetails.shippingCharges) +
+                    parseInt(invoiceDetails.roundOff)}
               </td>
             </tr>
           </tbody>

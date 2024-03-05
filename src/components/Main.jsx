@@ -8,6 +8,7 @@ import Notes from "./Notes";
 import Footer from "./Footer";
 import TableForm from "./TableForm.jsx";
 import ReactToPrint from "react-to-print";
+import axios from "axios";
 
 function Main() {
   const [paymentType, setPaymentType] = useState("Cash");
@@ -29,10 +30,10 @@ function Main() {
   const [invoiceDetails, setInvoiceDetails] = useState({
     srNo: "",
     productDetail: "",
-    kgOrGram: "",
-    rate: "",
-    value: "",
-    disc: "",
+    kgOrGram: "0",
+    rate: "0",
+    value: "0",
+    disc: "0",
     afterDisc: "",
     total: "",
     totalDiscount: "",
@@ -120,7 +121,17 @@ function Main() {
         afterDisc: item.afterDisc,
       })),
     };
+
     console.log(dataToSend);
+
+    axios
+      .post("http://localhost:8081/invoices", dataToSend)
+      .then((response) => {
+        console.log("Data received:", response.data);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the Axios request:", error);
+      });
   };
 
   return (

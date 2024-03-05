@@ -161,10 +161,9 @@ function TableForm({
               placeholder="After Disc"
               autoComplete="off"
               value={
-                (invoiceDetails.total =
-                  parseFloat(invoiceDetails.kgOrGram) *
-                    parseFloat(invoiceDetails.rate) -
-                  parseFloat(invoiceDetails.disc))
+                parseFloat(invoiceDetails.kgOrGram) *
+                  parseFloat(invoiceDetails.rate) -
+                parseFloat(invoiceDetails.disc)
               }
               readOnly
               onChange={handleChange}
