@@ -5,6 +5,7 @@ import { FaEdit } from "react-icons/fa";
 import Dialog from "./Dialog";
 
 function TableForm({
+  setInvoiceNumber,
   invoiceDetails,
   setInvoiceDetails,
   list,
@@ -41,7 +42,7 @@ function TableForm({
       };
       setList([...list, newItems]);
       setIsEdit(false);
-      console.log(list);
+      // console.log(list);
     }
   };
 
@@ -69,7 +70,7 @@ function TableForm({
           <div className="flex flex-col">
             <label htmlFor="srNo">Sr no</label>
             <input
-              type="no"
+              type="number"
               name="srNo"
               id="srNo"
               className="mb-3"
@@ -97,7 +98,7 @@ function TableForm({
           <div className="flex flex-col">
             <label htmlFor="kg/gram">Kg/Gram</label>
             <input
-              type="no"
+              type="text"
               name="kgOrGram"
               id="kg/gram"
               className="mb-3"
@@ -111,7 +112,7 @@ function TableForm({
           <div className="flex flex-col">
             <label htmlFor="rate">Rate</label>
             <input
-              type="no"
+              type="number"
               name="rate"
               id="rate"
               className="mb-3"
@@ -125,7 +126,7 @@ function TableForm({
           <div className="flex flex-col">
             <label htmlFor="value">Value</label>
             <input
-              type="no"
+              type="number"
               name="value"
               id="value"
               className="mb-3"
@@ -140,7 +141,7 @@ function TableForm({
           <div className="flex flex-col">
             <label htmlFor="disc">Discount</label>
             <input
-              type="no"
+              type="number"
               name="disc"
               id="srNo"
               className="mb-3"

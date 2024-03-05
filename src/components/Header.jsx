@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../assets/images/logo.png";
-function Header({ handlePrint }) {
+function Header() {
   return (
     <>
       <header className="flex flex-col items-center justify-center mb-5 xl:flex-row xl:justify-between">
