@@ -2,10 +2,12 @@ import { useState, useRef } from "react";
 import axios from "axios";
 import InvoiceTemplete from "./InvoiceTemplete.jsx";
 import EditInvoicePage from "./EditInvoicePage.jsx";
+import { useNavigate } from "react-router-dom";
+import SwitchButtons from "./SwitchButtons.jsx";
 
 function Main() {
   const [paymentType, setPaymentType] = useState("Cash");
-  const [showInvoice, setShowInvoice] = useState(true);
+  const [showInvoice, setShowInvoice] = useState(false);
   const [clientName, setClientName] = useState("");
   const [clientAddress, setClientAddress] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
@@ -88,9 +90,10 @@ function Main() {
         clientPos: clientPos,
         clientState: clientState,
         clientStateCode: clientStateCode,
+        invoiceDate: invoiceDate,
       },
-      paymentMethod: paymentType,
       invoiceDetails: {
+        paymentType: paymentType,
         totalValue: parseFloat(totalValue),
         totalDiscount: parseFloat(totalDiscount),
         totalAfterDiscount: parseFloat(totalAfterDiscount),
@@ -126,6 +129,8 @@ function Main() {
 
   return (
     <>
+      <SwitchButtons />
+
       <main className="m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl  bg-white rounded shadow">
         {showInvoice ? (
           <InvoiceTemplete

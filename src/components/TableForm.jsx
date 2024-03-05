@@ -13,14 +13,16 @@ function TableForm({
   handleChange,
   sum,
 }) {
+  const [ssrNo, setSrNo] = useState(1);
   const [isEdit, setIsEdit] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+
+  const suggestions = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (
-      !invoiceDetails.srNo ||
       !invoiceDetails.productDetail ||
       !invoiceDetails.kgOrGram ||
       !invoiceDetails.rate
@@ -29,7 +31,7 @@ function TableForm({
     } else {
       const newItems = {
         id: uuidv4(),
-        srNo: invoiceDetails.srNo,
+        srNo: list.length + 1,
         productDetail: invoiceDetails.productDetail,
         kgOrGram: invoiceDetails.kgOrGram,
         rate: invoiceDetails.rate,
@@ -40,6 +42,7 @@ function TableForm({
         total:
           invoiceDetails.kgOrGram * invoiceDetails.rate - invoiceDetails.disc,
       };
+      setSrNo(list.length + 1);
       setList([...list, newItems]);
       setIsEdit(false);
       // console.log(list);
@@ -76,8 +79,9 @@ function TableForm({
               className="mb-3"
               placeholder="Enter Serial No"
               autoComplete="off"
-              value={invoiceDetails.srNo}
+              value={ssrNo}
               onChange={handleChange}
+              readOnly
             />
           </div>
 
@@ -120,6 +124,7 @@ function TableForm({
               autoComplete="off"
               value={invoiceDetails.rate}
               onChange={handleChange}
+              inputMode="numeric"
             />
           </div>
 

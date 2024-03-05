@@ -11,7 +11,6 @@ body {
 }
 
 button {
-  /* We cannot select text of button */
   user-select: none;
 }
 
@@ -29,4 +28,11 @@ input, select {
   border-radius: 0.2rem;
   margin-bottom: 1.5rem;
   font-weight: 500;
+  user-select: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
