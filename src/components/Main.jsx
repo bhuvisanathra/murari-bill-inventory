@@ -4,7 +4,7 @@ import InvoiceTemplete from "./InvoiceTemplete.jsx";
 import EditInvoicePage from "./EditInvoicePage.jsx";
 import { useNavigate } from "react-router-dom";
 import SwitchButtons from "./SwitchButtons.jsx";
-import { BASE_URL } from "../services/urls.js";
+import BASE_URL from "../services/urls.js";
 
 function Main() {
   const [paymentType, setPaymentType] = useState("Cash");
@@ -19,8 +19,6 @@ function Main() {
   const [invoiceDate, setInvoiceDate] = useState("");
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
-
-  const componentRef = useRef();
 
   // Table UseState
   const [invoiceDetails, setInvoiceDetails] = useState({
@@ -149,7 +147,6 @@ function Main() {
             totalDiscount={totalDiscount}
             setList={setList}
             sum={sum}
-            componentRef={componentRef}
             showInvoice={showInvoice}
             setShowInvoice={setShowInvoice}
           />

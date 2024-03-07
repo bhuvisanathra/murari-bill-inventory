@@ -1,3 +1,5 @@
 // export const BASE_URL = "http://localhost:8081";
-// export default BASE_URL =
-"https://murari-bill-inventory-backend-production.up.railway.app/";
+const BASE_URL =
+  "https://murari-bill-inventory-backend-production.up.railway.app";
+
+export default BASE_URL;

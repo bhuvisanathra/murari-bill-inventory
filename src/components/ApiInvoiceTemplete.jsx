@@ -10,6 +10,7 @@ import Footer from "./Footer";
 import ReactToPrint from "react-to-print";
 import axios from "axios";
 import SwitchButtons from "./SwitchButtons";
+import BASE_URL from "../services/urls";
 
 const InvoiceeTemplate = () => {
   const { id } = useParams();
