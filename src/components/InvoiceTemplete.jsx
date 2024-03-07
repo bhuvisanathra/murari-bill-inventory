@@ -23,10 +23,10 @@ const InvoiceTemplete = ({
   totalDiscount,
   setList,
   sum,
-  componentRef,
   showInvoice,
   setShowInvoice,
 }) => {
+  const componentRef = useRef();
   return (
     <>
       <div ref={componentRef} className="p-5">

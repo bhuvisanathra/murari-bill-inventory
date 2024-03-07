@@ -22,7 +22,7 @@ const InvoiceeTemplate = () => {
       try {
         const response = await axios.get(`${BASE_URL}/invoices/${id}`);
         setClientData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -59,11 +59,8 @@ const InvoiceeTemplate = () => {
   return (
     <>
       <SwitchButtons />
-      <div
-        ref={componentRef}
-        className="flex bg-white flex-col justify-center m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl"
-      >
-        <div className="p-5" id="invoice-template">
+      <div className="flex bg-white flex-col justify-center m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl">
+        <div ref={componentRef} className="p-5" id="invoice-template">
           <Header />
           <MainDetails />
           <ClientDetails

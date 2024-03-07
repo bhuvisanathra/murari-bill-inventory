@@ -130,7 +130,7 @@ function Table({ invoiceDetails, list = [] }) {
               <td colSpan="2" className="font-bold text-center">
                 {invoiceDetails.grandTotal}
               </td>
-            </tr>{" "}
+            </tr>
           </tbody>
         </table>
       </div>
