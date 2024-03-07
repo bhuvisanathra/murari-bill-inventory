@@ -5,6 +5,8 @@ import EditInvoicePage from "./EditInvoicePage.jsx";
 import { useNavigate } from "react-router-dom";
 import SwitchButtons from "./SwitchButtons.jsx";
 import BASE_URL from "../services/urls.js";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Main() {
   const [paymentType, setPaymentType] = useState("Cash");
@@ -120,16 +122,30 @@ function Main() {
       .post(`${BASE_URL}/invoices`, dataToSend)
       .then((response) => {
         console.log("Data received:", response.data);
+        toast.success("Bill Generated!");
       })
       .catch((error) => {
         console.error("There was a problem with the Axios request:", error);
+        toast.error("Failed");
       });
   };
 
   return (
     <>
       <SwitchButtons />
-
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
       <main className="m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl  bg-white rounded shadow">
         {showInvoice ? (
           <InvoiceTemplete
@@ -151,34 +167,36 @@ function Main() {
             setShowInvoice={setShowInvoice}
           />
         ) : (
-          <EditInvoicePage
-            clientName={clientName}
-            setClientName={setClientName}
-            clientAddress={clientAddress}
-            setClientAddress={setClientAddress}
-            clientGst={clientGst}
-            setClientGst={setClientGst}
-            clientPos={clientPos}
-            setClientPos={setClientPos}
-            clientState={clientState}
-            setClientState={setClientState}
-            clientStateCode={clientStateCode}
-            setClientStateCode={setClientStateCode}
-            invoiceNo={invoiceNumber}
-            invoiceDate={invoiceDate}
-            setInvoiceDate={setInvoiceDate}
-            paymentType={paymentType}
-            setPaymentType={setPaymentType}
-            invoiceDetails={invoiceDetails}
-            setInvoiceDetails={setInvoiceDetails}
-            list={list}
-            setList={setList}
-            handleChange={handleChange}
-            sum={sum}
-            showInvoice={showInvoice}
-            setShowInvoice={setShowInvoice}
-            viewObject={viewObject}
-          />
+          <>
+            <EditInvoicePage
+              clientName={clientName}
+              setClientName={setClientName}
+              clientAddress={clientAddress}
+              setClientAddress={setClientAddress}
+              clientGst={clientGst}
+              setClientGst={setClientGst}
+              clientPos={clientPos}
+              setClientPos={setClientPos}
+              clientState={clientState}
+              setClientState={setClientState}
+              clientStateCode={clientStateCode}
+              setClientStateCode={setClientStateCode}
+              invoiceNo={invoiceNumber}
+              invoiceDate={invoiceDate}
+              setInvoiceDate={setInvoiceDate}
+              paymentType={paymentType}
+              setPaymentType={setPaymentType}
+              invoiceDetails={invoiceDetails}
+              setInvoiceDetails={setInvoiceDetails}
+              list={list}
+              setList={setList}
+              handleChange={handleChange}
+              sum={sum}
+              showInvoice={showInvoice}
+              setShowInvoice={setShowInvoice}
+              viewObject={viewObject}
+            />
+          </>
         )}
       </main>
     </>
