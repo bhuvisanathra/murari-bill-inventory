@@ -44,6 +44,16 @@ function TableForm({
       };
       setSrNo(list.length + 1);
       setList([...list, newItems]);
+      setInvoiceDetails({
+        srNo: 0,
+        productDetail: "",
+        kgOrGram: 0,
+        rate: 0,
+        value: 0,
+        disc: 0,
+        afterDisc: 0,
+        total: 0,
+      });
       setIsEdit(false);
       // console.log(list);
     }

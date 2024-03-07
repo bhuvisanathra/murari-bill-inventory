@@ -70,7 +70,7 @@ const EditInvoicePage = ({
               className="mb-3"
               placeholder="Enter Your Client Name"
               autoComplete="off"
-              value={clientName}
+              value={clientName || ""}
               onChange={(e) => setClientName(e.target.value)}
             />
           </div>
