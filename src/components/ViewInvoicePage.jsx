@@ -50,40 +50,42 @@ const ViewInvoicePage = () => {
           placeholder="Search by client name"
           className="mb-3 p-2 border border-gray-300 rounded-md"
         />
-        <table className="mt-5 mb-5 w-full border-2">
-          <thead>
-            <tr className="bg-gray-100 p-2">
-              <th className="p-1">No</th>
-              <th className="p-1">Type</th>
-              <th className="p-1">Client Name</th>
-              <th className="p-1">Date</th>
-              <th className="p-1">Amount</th>
-              <th colSpan="2" className="p-1">
-                View
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredClients.map((client) => (
-              <tr
-                key={client.cd.id}
-                className="text-center"
-                style={{ marginBottom: "5px" }}
-              >
-                <td className="p-1">{client.cd.id}</td>
-                <td className="p-1">{client.id.paymentType}</td>
-                <td className="p-1">{client.cd.clientName}</td>
-                <td className="p-1">{client.cd.clientDate}</td>
-                <td className="p-1">{client.id.grandTotal}</td>
-                <td className="p-1">
-                  <button onClick={() => handleViewInvoice(client.cd.id)}>
-                    <CiViewBoard className="text-blue-600 font-bold text-xl" />
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="mt-5 mb-5 w-full border-2">
+            <thead>
+              <tr className="bg-gray-100 p-2">
+                <th className="p-2">No</th>
+                <th className="p-2">Type</th>
+                <th className="p-2">Client Name</th>
+                <th className="p-2">Date</th>
+                <th className="p-2">Amount</th>
+                <th colSpan="2" className="p-1">
+                  View
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredClients.map((client) => (
+                <tr
+                  key={client.cd.id}
+                  className="text-center"
+                  style={{ marginBottom: "5px" }}
+                >
+                  <td className="p-2">{client.cd.id}</td>
+                  <td className="p-2">{client.id.paymentType}</td>
+                  <td className="p-2">{client.cd.clientName}</td>
+                  <td className="p-2">{client.cd.clientDate}</td>
+                  <td className="p-2">{client.id.grandTotal}</td>
+                  <td className="p-2">
+                    <button onClick={() => handleViewInvoice(client.cd.id)}>
+                      <CiViewBoard className="text-blue-600 font-bold text-xl" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
