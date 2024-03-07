@@ -87,7 +87,8 @@ const InvoiceeTemplate = () => {
                 Print/Download
               </button>
             )}
-            content={() => document.getElementById("invoice-template")}
+            content={() => componentRef.current}
+            bodyClass="print-container" // Add this to apply custom styling for printing
           />
         </div>
       </div>

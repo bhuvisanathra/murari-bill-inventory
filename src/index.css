@@ -31,6 +31,12 @@ input, select {
   user-select: none;
 }
 
+@media print {
+  .print-container>*:not(.p-5) {
+    display: none;
+  }
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
