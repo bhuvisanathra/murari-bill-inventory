@@ -19,9 +19,7 @@ const InvoiceeTemplate = () => {
   useEffect(() => {
     const fetchClientData = async () => {
       try {
-        const response = await axios.get(
-          `https://murari-bill-inventory-backend-production.up.railway.app/invoices/${id}`
-        );
+        const response = await axios.get(`${BASE_URL}/invoices/${id}`);
         setClientData(response.data);
         console.log(response.data);
       } catch (error) {

@@ -4,6 +4,7 @@ import InvoiceTemplete from "./InvoiceTemplete.jsx";
 import EditInvoicePage from "./EditInvoicePage.jsx";
 import { useNavigate } from "react-router-dom";
 import SwitchButtons from "./SwitchButtons.jsx";
+import { BASE_URL } from "../services/urls.js";
 
 function Main() {
   const [paymentType, setPaymentType] = useState("Cash");
@@ -118,10 +119,7 @@ function Main() {
 
     // Sending data
     axios
-      .post(
-        "https://murari-bill-inventory-backend-production.up.railway.app/invoices",
-        dataToSend
-      )
+      .post(`${BASE_URL}/invoices`, dataToSend)
       .then((response) => {
         console.log("Data received:", response.data);
       })
