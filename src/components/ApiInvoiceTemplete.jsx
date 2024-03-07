@@ -10,7 +10,6 @@ import Footer from "./Footer";
 import ReactToPrint from "react-to-print";
 import axios from "axios";
 import SwitchButtons from "./SwitchButtons";
-import { BASE_URL } from "../services/urls";
 
 const InvoiceeTemplate = () => {
   const { id } = useParams();
@@ -20,7 +19,9 @@ const InvoiceeTemplate = () => {
   useEffect(() => {
     const fetchClientData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/invoices/${id}`);
+        const response = await axios.get(
+          `https://murari-bill-inventory-backend-production.up.railway.app/invoices/${id}`
+        );
         setClientData(response.data);
         console.log(response.data);
       } catch (error) {

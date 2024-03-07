@@ -3,7 +3,6 @@ import SwitchButtons from "./SwitchButtons";
 import { CiViewBoard } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import BASE_URL from "../services/urls";
 
 const ViewInvoicePage = () => {
   const navigate = useNavigate();
@@ -16,7 +15,9 @@ const ViewInvoicePage = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/invoices`);
+      const response = await axios.get(
+        `https://murari-bill-inventory-backend-production.up.railway.app/invoices`
+      );
       setClients(response.data);
     } catch (error) {
       console.log(error);

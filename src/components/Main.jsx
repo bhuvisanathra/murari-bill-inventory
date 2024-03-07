@@ -118,7 +118,10 @@ function Main() {
 
     // Sending data
     axios
-      .post("http://localhost:8081/invoices", dataToSend)
+      .post(
+        "https://murari-bill-inventory-backend-production.up.railway.app/invoices",
+        dataToSend
+      )
       .then((response) => {
         console.log("Data received:", response.data);
       })
