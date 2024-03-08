@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Dialog from "./Dialog";
+import axios from "axios";
+import BASE_URL from "../services/urls";
 
 function TableForm({
   setInvoiceNumber,
@@ -16,8 +18,34 @@ function TableForm({
   const [ssrNo, setSrNo] = useState(1);
   const [isEdit, setIsEdit] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [products, setProducts] = useState([]);
 
-  const suggestions = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/product`);
+      setProducts(response.data);
+      console.log(response.data); // productName and productPrice
+    } catch (error) {
+      console.log("Error fetching products:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleProductChange = (selectedProduct) => {
+    const selectedProductData = products.find(
+      (product) => product.productName === selectedProduct
+    );
+    if (selectedProductData) {
+      setInvoiceDetails({
+        ...invoiceDetails,
+        productDetail: selectedProductData.productName,
+        rate: selectedProductData.productPrice,
+      });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,10 +70,9 @@ function TableForm({
         total:
           invoiceDetails.kgOrGram * invoiceDetails.rate - invoiceDetails.disc,
       };
-      setSrNo(list.length + 1);
+      setSrNo(newItems.srNo + 1);
       setList([...list, newItems]);
       setInvoiceDetails({
-        srNo: 0,
         productDetail: "",
         kgOrGram: 0,
         rate: 0,
@@ -55,11 +82,9 @@ function TableForm({
         total: 0,
       });
       setIsEdit(false);
-      // console.log(list);
     }
   };
 
-  // Edit Row
   const editRow = (id) => {
     const editingRow = list.find((row) => row.id === id);
     setList(list.filter((row) => row.id != id));
@@ -67,7 +92,6 @@ function TableForm({
     setInvoiceDetails(editingRow);
   };
 
-  // Delete row
   const deleteRow = (id) => setList(list.filter((row) => row.id != id));
 
   return (
@@ -97,16 +121,20 @@ function TableForm({
 
           <div className="flex flex-col">
             <label htmlFor="productDetails">Product</label>
-            <input
-              type="text"
+            <select
               name="productDetail"
               id="productDetails"
               className="mb-3"
-              placeholder="Enter Product Name"
-              autoComplete="off"
               value={invoiceDetails.productDetail}
-              onChange={handleChange}
-            />
+              onChange={(e) => handleProductChange(e.target.value)}
+            >
+              <option value="">Select Product</option>
+              {products.map((product) => (
+                <option key={product.productId} value={product.productName}>
+                  {product.productName}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex flex-col">
