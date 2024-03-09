@@ -36,6 +36,15 @@ const ViewInvoicePage = () => {
     setCurrentPage(1); // Reset current page when searching
   };
 
+  const handleDelete = async (clientId) => {
+    try {
+      await axios.delete(`${BASE_URL}/invoices/${clientId}`);
+      fetchClients(); // Refetch the list of clients after deletion
+    } catch (error) {
+      console.error("Error deleting invoice:", error);
+    }
+  };
+
   const filteredClients = clients.filter((client) =>
     client.cd.clientName.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -99,7 +108,7 @@ const ViewInvoicePage = () => {
                     </button>
                   </td>
                   <td colSpan="2" className="p-2">
-                    <button onClick={() => handleViewInvoice(client.cd.id)}>
+                    <button onClick={() => handleDelete(client.cd.id)}>
                       <MdDelete className="text-red-600 font-bold text-xl" />
                     </button>
                   </td>
