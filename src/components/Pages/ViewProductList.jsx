@@ -70,6 +70,15 @@ const ViewProductList = () => {
     }
   };
 
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await axios.delete(`${BASE_URL}/product/${productId}`);
+      setProducts(products.filter((product) => product.id !== productId));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
   const filteredProducts = products.filter((product) =>
     product.productName.toLowerCase().includes(filter.toLowerCase())
   );
@@ -142,7 +151,9 @@ const ViewProductList = () => {
             filter={filter}
             setFilter={setFilter}
             filteredProducts={filteredProducts}
+            setFilteredProducts={setProducts} // pass setProducts instead of setFilteredProducts
             handleViewProduct={handleViewProduct}
+            handleDeleteProduct={handleDeleteProduct} // pass handleDeleteProduct
           />
         )}
       </div>
