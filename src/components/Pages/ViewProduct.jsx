@@ -1,7 +1,7 @@
 import React from "react";
-import BASE_URL from "../services/urls";
+import BASE_URL from "../../services/urls";
 import { MdEdit } from "react-icons/md";
-import { ProductEditDialog } from "./ProductEditDialog";
+import { ProductEditDialog } from "../components/ProductEditDialog";
 
 export const ViewProduct = ({
   filter,

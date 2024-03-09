@@ -1,6 +1,8 @@
 import React from "react";
 
 function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
+  const remainingRows = 5 - list.length;
+
   return (
     <>
       <div className="overflow-x-auto">
@@ -17,7 +19,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
             </tr>
           </thead>
           <tbody>
-            {/* Changable Data */}
+            {/* Data Rows */}
             {list.map(
               ({
                 id,
@@ -32,7 +34,10 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
                 <tr
                   key={id}
                   className="text-center"
-                  style={{ marginBottom: "5px" }}
+                  style={{
+                    marginBottom: "5px",
+                    borderBottom: "1px solid #ccc",
+                  }}
                 >
                   <td className="p-1">{srNo}</td>
                   <td className="p-1">{productDetail}</td>
@@ -45,22 +50,29 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
               )
             )}
 
-            {/* Remain Same */}
-            <tr>
-              <td colSpan="4" className="font-bold bg-gray-100 text-center">
-                Total
-              </td>
-              <td colSpan="3" className="p-1 text-center">
-                <span>{sum}</span>
-              </td>
-            </tr>
-
-            <tr>
-              <td
-                colSpan="2"
-                rowSpan="6"
-                className="font-bold align-top text-center"
+            {/* Empty Rows */}
+            {[...Array(remainingRows)].map((_, index) => (
+              <tr
+                key={index}
+                style={{
+                  marginBottom: "5px",
+                  borderBottom: "1px solid #ccc",
+                }}
               >
+                <td className="p-1">&nbsp;</td>
+                <td className="p-1">&nbsp;</td>
+                <td className="p-1">&nbsp;</td>
+                <td className="p-1">&nbsp;</td>
+                <td className="p-1">&nbsp;</td>
+                <td className="p-1">&nbsp;</td>
+                <td className="p-1">&nbsp;</td>
+              </tr>
+            ))}
+
+            {/* Remain Same */}
+            <div className="mt-3"></div>
+            <tr className="bg-gray-100">
+              <td colSpan="2" className="font-bold align-top text-center">
                 Remarks
               </td>
               <td colSpan="3" className="font-bold text-center">
@@ -72,6 +84,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
             </tr>
 
             <tr>
+              <td rowSpan="5" colSpan="2" className="border-b-2"></td>
               <td colSpan="3" className="font-bold text-center">
                 Total
               </td>
@@ -93,11 +106,11 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
               <td colSpan="2" className="font-bold text-center">
                 CGST
               </td>
-              <td colSpan="1" className="font-bold text-center">
-                {invoiceDetails.precantageCgst}
+              <td colSpan="1" className="font-bold text-left">
+                2.50%
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {sum * 0.025}
+                {Math.round(sum * 0.025)}
               </td>
             </tr>
 
@@ -105,11 +118,11 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
               <td colSpan="2" className="font-bold text-center">
                 SGST
               </td>
-              <td colSpan="1" className="font-bold text-center">
-                {invoiceDetails.precantageSgst}
+              <td colSpan="1" className="font-bold text-left">
+                2.50%
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {sum * 0.025}
+                {Math.round(sum * 0.025)}
               </td>
             </tr>
 
@@ -118,7 +131,9 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
                 Shipping Charges
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {invoiceDetails.shippingCharges}
+                {invoiceDetails.shippingCharges
+                  ? invoiceDetails.shippingCharges
+                  : 0}
               </td>
             </tr>
 
@@ -126,7 +141,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
               <td
                 rowSpan="3"
                 colSpan="2"
-                className="bg-gray-100 font-bold align-bottom text-center"
+                className="font-bold align-bottom text-center"
               >
                 Authorized Signature
               </td>
@@ -134,23 +149,25 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
                 Round Off
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {invoiceDetails.roundOff}
+                {invoiceDetails.roundOff ? invoiceDetails.roundOff : 0}
               </td>
             </tr>
 
-            <tr>
+            <tr className="bg-gray-800 text-white">
               <td colSpan="3" className="font-bold text-center">
                 Grand Total
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {isNaN(sum) ||
-                isNaN(parseInt(invoiceDetails.shippingCharges)) ||
-                isNaN(parseInt(invoiceDetails.roundOff))
-                  ? "0"
-                  : sum +
-                    2 * (sum * 0.025) +
-                    parseInt(invoiceDetails.shippingCharges) +
-                    parseInt(invoiceDetails.roundOff)}
+                {sum +
+                  2 * Math.round(sum * 0.025) +
+                  parseInt(
+                    invoiceDetails.shippingCharges
+                      ? invoiceDetails.shippingCharges
+                      : 0
+                  ) +
+                  parseInt(
+                    invoiceDetails.roundOff ? invoiceDetails.roundOff : 0
+                  )}
               </td>
             </tr>
           </tbody>

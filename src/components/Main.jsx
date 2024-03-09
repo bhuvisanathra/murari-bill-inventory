@@ -1,14 +1,14 @@
 import { useState, useRef } from "react";
 import axios from "axios";
-import InvoiceTemplete from "./InvoiceTemplete.jsx";
-import EditInvoicePage from "./EditInvoicePage.jsx";
-import { useNavigate } from "react-router-dom";
-import SwitchButtons from "./SwitchButtons.jsx";
+import InvoiceTemplete from "./Pages/InvoiceTemplete.jsx";
+import EditInvoicePage from "../components/Pages/EditInvoicePage.jsx";
+import SwitchButtons from "./components/SwitchButtons.jsx";
 import BASE_URL from "../services/urls.js";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Main() {
+  const currentDate = new Date().toISOString().split("T")[0];
   const [paymentType, setPaymentType] = useState("Cash");
   const [showInvoice, setShowInvoice] = useState(false);
   const [clientName, setClientName] = useState("");
@@ -18,7 +18,7 @@ function Main() {
   const [clientPos, setClientPos] = useState("");
   const [clientState, setClientState] = useState("");
   const [clientStateCode, setClientStateCode] = useState("");
-  const [invoiceDate, setInvoiceDate] = useState("");
+  const [invoiceDate, setInvoiceDate] = useState(currentDate);
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -26,7 +26,7 @@ function Main() {
   const [invoiceDetails, setInvoiceDetails] = useState({
     srNo: 0,
     productDetail: "",
-    kgOrGram: 0,
+    kgOrGram: 1,
     rate: 0,
     value: 0,
     disc: 0,
@@ -34,9 +34,9 @@ function Main() {
     total: 0,
     totalDiscount: 0,
     totalTaxableValue: 0,
-    precantageCgst: 2.5,
+    precantageCgst: "2.5",
     cgst: 0,
-    precantageSgst: 2.5,
+    precantageSgst: "2.5",
     sgst: 0,
     shippingCharges: 0,
     roundOff: 0,
@@ -67,12 +67,12 @@ function Main() {
   let totalCgst = totalAfterDiscount * 0.025;
   let totalSgst = totalAfterDiscount * 0.025;
 
+  // Calculate shipping charges and round off with default value of 0 if empty
+  let shippingCharges = parseFloat(invoiceDetails.shippingCharges) || 0;
+  let roundOff = parseFloat(invoiceDetails.roundOff) || 0;
+
   let grandTotal =
-    totalAfterDiscount +
-    totalCgst +
-    totalSgst +
-    parseFloat(invoiceDetails.shippingCharges) +
-    parseFloat(invoiceDetails.roundOff);
+    totalAfterDiscount + totalCgst + totalSgst + shippingCharges + roundOff;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -100,8 +100,8 @@ function Main() {
         totalAfterDiscount: parseFloat(totalAfterDiscount),
         totalCgst: parseFloat(totalCgst),
         totalSgst: parseFloat(totalSgst),
-        shippingCharges: parseFloat(invoiceDetails.shippingCharges),
-        roundOff: parseFloat(invoiceDetails.roundOff),
+        shippingCharges: parseFloat(shippingCharges),
+        roundOff: parseFloat(roundOff),
         grandTotal: parseFloat(grandTotal),
       },
       invoiceList: list.map((item) => ({

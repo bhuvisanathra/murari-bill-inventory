@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import SwitchButtons from "./SwitchButtons";
+import SwitchButtons from "../components/SwitchButtons";
 import { CiViewBoard } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
 import axios from "axios";
-import BASE_URL from "../services/urls";
+import BASE_URL from "../../services/urls";
 
 const ViewInvoicePage = () => {
   const navigate = useNavigate();
   const [clients, setClients] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [entriesPerPage] = useState(20);
 
   useEffect(() => {
     fetchClients();
@@ -30,11 +33,22 @@ const ViewInvoicePage = () => {
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset current page when searching
   };
 
   const filteredClients = clients.filter((client) =>
     client.cd.clientName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Pagination
+  const indexOfLastEntry = currentPage * entriesPerPage;
+  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+  const currentEntries = filteredClients.slice(
+    indexOfFirstEntry,
+    indexOfLastEntry
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -62,10 +76,13 @@ const ViewInvoicePage = () => {
                 <th colSpan="2" className="p-1">
                   View
                 </th>
+                <th colSpan="2" className="p-1">
+                  Delete
+                </th>
               </tr>
             </thead>
             <tbody>
-              {filteredClients.map((client) => (
+              {currentEntries.map((client) => (
                 <tr
                   key={client.cd.id}
                   className="text-center"
@@ -76,15 +93,37 @@ const ViewInvoicePage = () => {
                   <td className="p-2">{client.cd.clientName}</td>
                   <td className="p-2">{client.cd.clientDate}</td>
                   <td className="p-2">{client.id.grandTotal}</td>
-                  <td className="p-2">
+                  <td colSpan="2" className="p-2">
                     <button onClick={() => handleViewInvoice(client.cd.id)}>
                       <CiViewBoard className="text-blue-600 font-bold text-xl" />
+                    </button>
+                  </td>
+                  <td colSpan="2" className="p-2">
+                    <button onClick={() => handleViewInvoice(client.cd.id)}>
+                      <MdDelete className="text-red-600 font-bold text-xl" />
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+        {/* Pagination */}
+        <div className="flex justify-center">
+          {Array.from(
+            { length: Math.ceil(filteredClients.length / entriesPerPage) },
+            (_, index) => (
+              <button
+                key={index}
+                onClick={() => paginate(index + 1)}
+                className={`mx-1 p-2 border border-gray-300 rounded-md ${
+                  currentPage === index + 1 ? "bg-blue-500 text-white" : ""
+                }`}
+              >
+                {index + 1}
+              </button>
+            )
+          )}
         </div>
       </div>
     </>

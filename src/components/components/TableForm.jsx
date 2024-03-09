@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Dialog from "./Dialog";
 import axios from "axios";
-import BASE_URL from "../services/urls";
+import BASE_URL from "../../services/urls";
 
 function TableForm({
   setInvoiceNumber,
@@ -74,7 +74,7 @@ function TableForm({
       setList([...list, newItems]);
       setInvoiceDetails({
         productDetail: "",
-        kgOrGram: 0,
+        kgOrGram: 1,
         rate: 0,
         value: 0,
         disc: 0,
@@ -205,9 +205,13 @@ function TableForm({
               placeholder="After Disc"
               autoComplete="off"
               value={
-                parseFloat(invoiceDetails.kgOrGram) *
+                (parseFloat(invoiceDetails.kgOrGram)
+                  ? parseFloat(invoiceDetails.kgOrGram)
+                  : 1) *
                   parseFloat(invoiceDetails.rate) -
-                parseFloat(invoiceDetails.disc)
+                (parseFloat(invoiceDetails.disc)
+                  ? parseFloat(invoiceDetails.disc)
+                  : 0)
               }
               readOnly
               onChange={handleChange}

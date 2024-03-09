@@ -1,5 +1,5 @@
 import React from "react";
-import TableForm from "./TableForm";
+import TableForm from "../components/TableForm";
 
 const EditInvoicePage = ({
   clientName,

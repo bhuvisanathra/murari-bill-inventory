@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import SwitchButtons from "./SwitchButtons";
+import SwitchButtons from "../components/SwitchButtons";
 import axios from "axios";
-import BASE_URL from "../services/urls";
-import { MdEdit } from "react-icons/md";
-import { ProductEditDialog } from "./ProductEditDialog";
+import BASE_URL from "../../services/urls";
+import { ProductEditDialog } from "../components/ProductEditDialog";
 import ViewProduct from "./ViewProduct";
 import { useNavigate } from "react-router-dom";
-import Dialog from "./Dialog";
+import Dialog from "../components/Dialog";
 
 const ViewProductList = () => {
   const [products, setProducts] = useState([]);

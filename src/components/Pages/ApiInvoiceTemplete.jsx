@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "./Header";
-import MainDetails from "./MainDetails";
-import ClientDetails from "./ClientDetails";
-import Dates from "./Dates";
-import Tablee from "./ApiTable";
-import Notes from "./Notes";
-import Footer from "./Footer";
+import Header from "../components/Header";
+import MainDetails from "../components/MainDetails";
+import ClientDetails from "../components/ClientDetails";
+import Dates from "../components/Dates";
+import Tablee from "../components/ApiTable";
+import Notes from "../components/Notes";
+import Footer from "../components/Footer";
 import ReactToPrint from "react-to-print";
 import axios from "axios";
-import SwitchButtons from "./SwitchButtons";
-import BASE_URL from "../services/urls";
+import SwitchButtons from "../components/SwitchButtons";
+import BASE_URL from "../../services/urls";
+import Loading from "./Loading";
 
 const InvoiceeTemplate = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const InvoiceeTemplate = () => {
     fetchClientData();
   }, [id]);
 
-  if (!clientData) return <div>Loading...</div>;
+  if (!clientData) return <Loading />;
 
   const {
     clientName,

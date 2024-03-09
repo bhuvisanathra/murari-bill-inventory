@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
-import Header from "./Header";
-import MainDetails from "./MainDetails";
-import ClientDetails from "./ClientDetails";
-import Dates from "./Dates";
-import Table from "./Table";
-import Notes from "./Notes";
-import Footer from "./Footer";
+import Header from "../components/Header";
+import MainDetails from "../components/MainDetails";
+import ClientDetails from "../components/ClientDetails";
+import Dates from "../components/Dates";
+import Table from "../components/Table";
+import Notes from "../components/Notes";
+import Footer from "../components/Footer";
 import ReactToPrint from "react-to-print";
 
 const InvoiceTemplete = ({
