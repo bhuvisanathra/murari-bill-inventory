@@ -1,5 +1,6 @@
 import React from "react";
 import TableForm from "../components/TableForm";
+import { stateOptions } from "../../services/data";
 
 const EditInvoicePage = ({
   clientName,
@@ -109,16 +110,27 @@ const EditInvoicePage = ({
 
           <div className="flex flex-col">
             <label htmlFor="state">Client State</label>
-            <input
-              type="text"
-              name="text"
+            <select
+              name="state"
               id="state"
               className="mb-3"
-              placeholder="Enter State"
-              autoComplete="off"
               value={clientState}
-              onChange={(e) => setClientState(e.target.value)}
-            />
+              onChange={(e) => {
+                setClientState(e.target.value);
+                const selectedState = stateOptions.find(
+                  (state) => state.name === e.target.value
+                );
+                if (selectedState) {
+                  setClientStateCode(selectedState.code);
+                }
+              }}
+            >
+              {stateOptions.map((state) => (
+                <option key={state.code} value={state.name}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex flex-col">
@@ -132,6 +144,7 @@ const EditInvoicePage = ({
               autoComplete="off"
               value={clientStateCode}
               onChange={(e) => setClientStateCode(e.target.value)}
+              disabled
             />
           </div>
         </article>

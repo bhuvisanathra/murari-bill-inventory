@@ -17,7 +17,7 @@ function Main() {
   const [clientGst, setClientGst] = useState("");
   const [clientPos, setClientPos] = useState("");
   const [clientState, setClientState] = useState("");
-  const [clientStateCode, setClientStateCode] = useState("");
+  const [clientStateCode, setClientStateCode] = useState("1");
   const [invoiceDate, setInvoiceDate] = useState(currentDate);
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
@@ -67,7 +67,6 @@ function Main() {
   let totalCgst = totalAfterDiscount * 0.025;
   let totalSgst = totalAfterDiscount * 0.025;
 
-  // Calculate shipping charges and round off with default value of 0 if empty
   let shippingCharges = parseFloat(invoiceDetails.shippingCharges) || 0;
   let roundOff = parseFloat(invoiceDetails.roundOff) || 0;
 
@@ -121,7 +120,6 @@ function Main() {
 
     console.log(dataToSend);
 
-    // Sending data
     axios
       .post(`${BASE_URL}/invoices`, dataToSend)
       .then((response) => {
