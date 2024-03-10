@@ -47,18 +47,6 @@ const EditInvoicePage = ({
           <option value="MFG Customer">MFG Customer</option>
         </select>
 
-        {/* <label htmlFor="invoiceNo">{paymentType} No</label>
-      <input
-        type="no"
-        name="text"
-        id="invoiceNo"
-        className="mb-3"
-        placeholder={`${paymentType} No`}
-        autoComplete="off"
-        value={invoiceNumber}
-        onChange={(e) => setInvoiceNumber(e.target.value)}
-      /> */}
-
         {/* Div 1 For name and address */}
         <article className="md:grid grid-cols-2 gap-10">
           <div className="flex flex-col">
@@ -201,17 +189,12 @@ const EditInvoicePage = ({
         </article>
 
         <button
-          onClick={() => setShowInvoice(true)}
+          onClick={() => {
+            viewObject();
+          }}
           className="bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
         >
-          Preview Invoice
-        </button>
-
-        <button
-          onClick={viewObject}
-          className="mt-5 bg-blue-500 text-white font-bold py-1 px-1 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
-        >
-          View Object
+          Generate Invoice
         </button>
       </div>
     </>

@@ -83,6 +83,10 @@ function Main() {
   };
 
   const viewObject = () => {
+    if (!clientName || !clientAddress || !clientState || list.length === 0) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
     const dataToSend = {
       clientDetails: {
         clientName: clientName,
@@ -122,6 +126,7 @@ function Main() {
       .post(`${BASE_URL}/invoices`, dataToSend)
       .then((response) => {
         console.log("Data received:", response.data);
+        setShowInvoice(true);
         toast.success("Bill Generated!");
       })
       .catch((error) => {
