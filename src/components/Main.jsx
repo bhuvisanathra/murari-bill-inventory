@@ -16,8 +16,8 @@ function Main() {
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [clientGst, setClientGst] = useState("");
   const [clientPos, setClientPos] = useState("");
-  const [clientState, setClientState] = useState("");
-  const [clientStateCode, setClientStateCode] = useState("1");
+  const [clientState, setClientState] = useState("Gujarat");
+  const [clientStateCode, setClientStateCode] = useState("24");
   const [invoiceDate, setInvoiceDate] = useState(currentDate);
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);

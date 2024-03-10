@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import BASE_URL from "../../services/urls";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { ProductEditDialog } from "../components/ProductEditDialog";
+import ConfirmationDialog from "../components/ConfirmationDialog ";
 
 export const ViewProduct = ({
   filter,
   setFilter,
   filteredProducts,
-  setFilteredProducts, // Add setFilteredProducts to update the product list
+  setFilteredProducts,
   handleViewProduct,
 }) => {
-  const handleDelete = async (productId) => {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [productIdToDelete, setProductIdToDelete] = useState(null);
+
+  const handleDelete = (productId) => {
+    setProductIdToDelete(productId);
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmDelete = async (productId) => {
     try {
       const response = await fetch(`${BASE_URL}/product/${productId}`, {
         method: "DELETE",
@@ -81,6 +89,18 @@ export const ViewProduct = ({
           </tbody>
         </table>
       </div>
+
+      {/* Confirmation Dialog for deleting product */}
+      {showConfirmation && (
+        <ConfirmationDialog
+          message="Are you sure you want to delete this product?"
+          onCancel={() => setShowConfirmation(false)}
+          onConfirm={() => {
+            handleConfirmDelete(productIdToDelete);
+            setShowConfirmation(false);
+          }}
+        />
+      )}
     </>
   );
 };

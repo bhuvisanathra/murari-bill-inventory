@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import BASE_URL from "../../services/urls";
+import ConfirmationDialog from "../components/ConfirmationDialog ";
 
 const ViewInvoicePage = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const ViewInvoicePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage] = useState(20);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
 
   useEffect(() => {
     fetchClients();
@@ -35,15 +38,22 @@ const ViewInvoicePage = () => {
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset current page when searching
+    setCurrentPage(1);
   };
 
-  const handleDelete = async (clientId) => {
+  const handleDelete = (clientId) => {
+    setSelectedInvoiceId(clientId);
+    setShowConfirmation(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      await axios.delete(`${BASE_URL}/invoices/${clientId}`);
-      fetchClients(); // Refetch the list of clients after deletion
+      await axios.delete(`${BASE_URL}/invoices/${selectedInvoiceId}`);
+      fetchClients();
     } catch (error) {
       console.error("Error deleting invoice:", error);
+    } finally {
+      setShowConfirmation(false);
     }
   };
 
@@ -136,6 +146,14 @@ const ViewInvoicePage = () => {
             )
           )}
         </div>
+        {/* Confirmation Dialog */}
+        {showConfirmation && (
+          <ConfirmationDialog
+            message="Are you sure you want to delete this invoice?"
+            onCancel={() => setShowConfirmation(false)}
+            onConfirm={confirmDelete}
+          />
+        )}
       </div>
     </>
   );
