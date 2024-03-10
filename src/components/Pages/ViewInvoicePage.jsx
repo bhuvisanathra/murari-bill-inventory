@@ -28,7 +28,9 @@ const ViewInvoicePage = () => {
 
   const handleViewInvoice = (clientId) => {
     const selectedClient = clients.find((client) => client.cd.id === clientId);
-    navigate(`/invoice/${clientId}`, { state: { clientData: selectedClient } });
+    navigate(`/invoices/${clientId}`, {
+      state: { clientData: selectedClient },
+    });
   };
 
   const handleSearch = (e) => {

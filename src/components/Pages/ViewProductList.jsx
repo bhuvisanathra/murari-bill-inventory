@@ -63,7 +63,7 @@ const ViewProductList = () => {
         fetchProducts();
         setAddProduct(false);
         setIsAddingProduct(false); // Redirect to view product screen after adding
-        navigate("/viewProduct");
+        navigate("/product");
       } catch (error) {
         console.error("Error adding product:", error);
       }

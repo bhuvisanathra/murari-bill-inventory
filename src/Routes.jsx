@@ -9,12 +9,12 @@ import NotFoundPage from "./components/Pages/NotFoundPage";
 
 const RouteConfig = () => {
   return (
-    <Router>
+    <Router basename="/">
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/viewInvoice" element={<ViewInvoicePage />} />
-        <Route path="/invoice/:id" element={<ApiInvoiceTemplete />} />
-        <Route path="/viewProduct" element={<ViewProductList />} />
+        <Route path="/invoices" element={<ViewInvoicePage />} />
+        <Route path="/invoices/:id" element={<ApiInvoiceTemplete />} />
+        <Route path="/product" element={<ViewProductList />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

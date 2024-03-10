@@ -43,13 +43,13 @@ const Navbar = () => {
             </button>
             <button
               className="rounded-md text-white font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
-              onClick={() => navigate("/viewInvoice")}
+              onClick={() => navigate("/invoices")}
             >
               Manage Invoice
             </button>
             <button
               className="rounded-md text-white font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
-              onClick={() => navigate("/viewProduct")}
+              onClick={() => navigate("/product")}
             >
               Manage Product
             </button>
@@ -66,13 +66,13 @@ const Navbar = () => {
           </button>
           <button
             className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm mt-2"
-            onClick={() => navigate("/viewInvoice")}
+            onClick={() => navigate("/invoices")}
           >
             Manage Invoice
           </button>
           <button
             className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm mt-2"
-            onClick={() => navigate("/viewProduct")}
+            onClick={() => navigate("/product")}
           >
             Manage Product
           </button>

@@ -12,10 +12,12 @@ import axios from "axios";
 import SwitchButtons from "../components/SwitchButtons";
 import BASE_URL from "../../services/urls";
 import Loading from "./Loading";
+import NoDataPage from "./NoDataPage";
 
 const InvoiceeTemplate = () => {
   const { id } = useParams();
   const [clientData, setClientData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const componentRef = useRef();
 
   useEffect(() => {
@@ -23,17 +25,26 @@ const InvoiceeTemplate = () => {
       try {
         const response = await axios.get(`${BASE_URL}/invoices/${id}`);
         setClientData(response.data);
+        setLoading(false);
         // console.log(response.data);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
 
     fetchClientData();
   }, [id]);
 
-  if (!clientData) return <Loading />;
+  if (loading) return <Loading />;
 
+  if (!clientData) {
+    setTimeout(() => {
+      setLoading(true);
+    }, 5000);
+
+    return <NoDataPage />;
+  }
   const {
     clientName,
     clientAddress,
