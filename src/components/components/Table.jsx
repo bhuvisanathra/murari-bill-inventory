@@ -6,7 +6,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
   return (
     <>
       <div className="overflow-x-auto">
-        <table className="mt-5 w-full">
+        <table className="mt-3 w-full">
           <thead>
             <tr className="bg-gray-100">
               <th className="p-1">Sr No</th>

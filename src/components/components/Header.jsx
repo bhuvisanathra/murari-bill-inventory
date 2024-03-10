@@ -1,40 +1,19 @@
 import React from "react";
 import logo from "../../assets/images/logo.png";
+
 function Header() {
   return (
     <>
-      <header className="flex flex-col items-center justify-center mb-5 xl:flex-row xl:justify-between">
+      <header className="flex flex-col items-center justify-start  xl:flex-row xl:justify-start md:flex-row sm:justify-start sm:items-start mb-1">
         <div>
-          <h1 className="font-bold uppercase tracking-wide text-3xl mb-3">
+          <h1 className="font-bold uppercase tracking-wide text-5xl mb-3">
             <img
               src={logo}
-              className="w-24 h-auto sm:w-32 sm:h-auto md:w-40 md:h-auto lg:w-48 lg:h-auto xl:w-56 xl:h-auto"
+              className="w-40 mb-2 h-auto sm:w-48 sm:h-auto md:w-56 md:h-auto lg:w-64 lg:h-auto xl:w-72 xl:h-auto mx-auto "
               alt="Logo"
             />
           </h1>
         </div>
-        {/* <div>
-          <ul className="flex items-center justify-between flex-wrap">
-            <li>
-              <button
-                onClick={handlePrint}
-                className="bg-gray-500 text-white font-bold py-2 px-4 rounded shadow border-2 border-gray-500 hover:bg-transparent hover:text-gray-500 transition-all duration-300"
-              >
-                Print
-              </button>
-            </li>
-            <li className="mx-2">
-              <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300">
-                Download
-              </button>
-            </li>
-            <li>
-              <button className="bg-green-500 text-white font-bold py-2 px-4 rounded shadow border-2 border-green-500 hover:bg-transparent hover:text-green-500 transition-all duration-300">
-                Send
-              </button>
-            </li>
-          </ul>
-        </div> */}
       </header>
     </>
   );

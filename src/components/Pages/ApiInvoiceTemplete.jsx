@@ -90,7 +90,7 @@ const InvoiceeTemplate = () => {
           />
           <Tablee invoiceDetails={invoiceDetails} list={clientData.il} />
           <Notes />
-          <Footer />
+          {/* <Footer /> */}
         </div>
         <div className="flex justify-center gap-2 text-center">
           <ReactToPrint

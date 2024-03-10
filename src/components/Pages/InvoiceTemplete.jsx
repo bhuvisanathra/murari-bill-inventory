@@ -53,7 +53,6 @@ const InvoiceTemplete = ({
           sum={sum}
         />
         <Notes />
-        <Footer />
       </div>
       <div className="flex justify-center gap-2 text-center">
         <ReactToPrint

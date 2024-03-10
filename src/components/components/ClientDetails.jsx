@@ -10,11 +10,13 @@ function ClientDetails({
 }) {
   return (
     <section className="mt-5">
-      <article className="mt-5 flex items-start justify-start">
+      <article className="flex items-start justify-start">
         <ul className="text-sm md:text-base">
           {" "}
           {/* Add this line */}
-          <h2 className="text-xl uppercase">Client Details</h2>
+          <h2 className="text-xl uppercase mb-0.5 border-b-2 border-gray-300 md:2xl sm:text-xl">
+            Client Details
+          </h2>
           {true && (
             <li>
               <span className="font-bold">Name:</span> {clientName}

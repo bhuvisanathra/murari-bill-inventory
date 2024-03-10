@@ -2,14 +2,17 @@ import React from "react";
 
 function Dates({ invoiceNo, invoiceDate, paymentMethod }) {
   return (
-    <article className="mt-5 flex items-end justify-end">
+    <article className="flex items-end justify-end ">
       <ul>
-        <li className="p-1">
+        <h2 className="text-xl uppercase mb-0.5 border-b-2 border-gray-300 md:2xl sm:text-xl">
+          Invoice Details
+        </h2>
+        <p className="text-left md:text-left " style={{ fontSize: "16px" }}>
           <span className="font-bold">{paymentMethod} Number:</span> {invoiceNo}
-        </li>
-        <li className="p-1 bg-gray-100 rounded">
+        </p>{" "}
+        <p className="text-left md:text-left " style={{ fontSize: "16px" }}>
           <span className="font-bold">Invoice date:</span> {invoiceDate}
-        </li>
+        </p>{" "}
       </ul>
     </article>
   );
