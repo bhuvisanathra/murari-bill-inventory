@@ -25,6 +25,7 @@ const InvoiceTemplete = ({
   sum,
   showInvoice,
   setShowInvoice,
+  invoiceIdAfterDB,
 }) => {
   const componentRef = useRef();
   return (
@@ -41,7 +42,7 @@ const InvoiceTemplete = ({
           clientStateCode={clientStateCode}
         />
         <Dates
-          invoiceNo={invoiceNumber}
+          invoiceNo={invoiceIdAfterDB}
           invoiceDate={invoiceDate}
           paymentMethod={paymentType}
         />

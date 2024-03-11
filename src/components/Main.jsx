@@ -20,6 +20,7 @@ function Main() {
   const [clientStateCode, setClientStateCode] = useState("24");
   const [invoiceDate, setInvoiceDate] = useState(currentDate);
   const [list, setList] = useState([]);
+  const [invoiceIdAfterDB, setInvoiceIdAfterDB] = useState(null);
   const [total, setTotal] = useState(0);
 
   // Table UseState
@@ -124,6 +125,7 @@ function Main() {
       .post(`${BASE_URL}/invoices`, dataToSend)
       .then((response) => {
         console.log("Data received:", response.data);
+        setInvoiceIdAfterDB(response.data);
         setShowInvoice(true);
         toast.success("Bill Generated!");
       })
@@ -168,6 +170,7 @@ function Main() {
             sum={sum}
             showInvoice={showInvoice}
             setShowInvoice={setShowInvoice}
+            invoiceIdAfterDB={invoiceIdAfterDB}
           />
         ) : (
           <>
