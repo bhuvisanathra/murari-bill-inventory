@@ -26,6 +26,7 @@ const InvoiceTemplete = ({
   showInvoice,
   setShowInvoice,
   invoiceIdAfterDB,
+  setInvoiceIdAfterDB,
 }) => {
   const componentRef = useRef();
   return (
@@ -65,7 +66,10 @@ const InvoiceTemplete = ({
           content={() => componentRef.current}
         />
         <button
-          onClick={() => setShowInvoice(false)}
+          onClick={() => {
+            setShowInvoice(false);
+            setInvoiceIdAfterDB(invoiceIdAfterDB);
+          }}
           className="mt-5 bg-green-500 text-white font-bold py-2 px-4 rounded shadow border-2 border-green-500 hover:bg-transparent hover:text-green-500 transition-all duration-300"
         >
           Edit Information

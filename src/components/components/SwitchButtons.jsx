@@ -30,7 +30,11 @@ const Navbar = () => {
                 />
               </svg>
             </button>
-            <span className="text-white font-semibold text-xl">
+            <span
+              className="text-white font-semibold text-3xl"
+              onClick={() => navigate("/")}
+              style={{ cursor: "pointer" }}
+            >
               Murari Farshan Gruh
             </span>
           </div>

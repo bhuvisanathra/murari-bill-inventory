@@ -21,6 +21,7 @@ function Main() {
   const [invoiceDate, setInvoiceDate] = useState(currentDate);
   const [list, setList] = useState([]);
   const [invoiceIdAfterDB, setInvoiceIdAfterDB] = useState(null);
+  const [invoiceListIds, setInvoiceListIds] = useState([]);
   const [total, setTotal] = useState(0);
 
   // Table UseState
@@ -87,52 +88,103 @@ function Main() {
       toast.error("Please fill in all required fields.");
       return;
     }
-    const dataToSend = {
-      clientDetails: {
-        clientName: clientName,
-        clientAddress: clientAddress,
-        clientGst: clientGst,
-        clientPos: clientPos,
-        clientState: clientState,
-        clientStateCode: clientStateCode,
-        invoiceDate: invoiceDate,
-      },
-      invoiceDetails: {
-        paymentType: paymentType,
-        totalValue: parseFloat(totalValue),
-        totalDiscount: parseFloat(totalDiscount),
-        totalAfterDiscount: parseFloat(totalAfterDiscount),
-        totalCgst: parseFloat(totalCgst),
-        totalSgst: parseFloat(totalSgst),
-        shippingCharges: parseFloat(shippingCharges),
-        roundOff: parseFloat(roundOff),
-        grandTotal: parseFloat(grandTotal),
-      },
-      invoiceList: list.map((item) => ({
-        srNo: parseInt(item.srNo),
-        productDetail: item.productDetail,
-        kgOrGram: parseFloat(item.kgOrGram),
-        rate: parseFloat(item.rate),
-        value: parseFloat(item.value),
-        disc: parseFloat(item.disc),
-        afterDisc: parseFloat(item.afterDisc),
-      })),
-    };
 
-    console.log(dataToSend);
+    if (invoiceIdAfterDB !== null) {
+      const dataToSend = {
+        clientDetails: {
+          id: invoiceIdAfterDB,
+          clientName: clientName,
+          clientAddress: clientAddress,
+          clientGst: clientGst,
+          clientPos: clientPos,
+          clientState: clientState,
+          clientStateCode: clientStateCode,
+          invoiceDate: invoiceDate,
+        },
+        invoiceDetails: {
+          id: invoiceIdAfterDB,
+          paymentType: paymentType,
+          totalValue: parseFloat(totalValue),
+          totalDiscount: parseFloat(totalDiscount),
+          totalAfterDiscount: parseFloat(totalAfterDiscount),
+          totalCgst: parseFloat(totalCgst),
+          totalSgst: parseFloat(totalSgst),
+          shippingCharges: parseFloat(shippingCharges),
+          roundOff: parseFloat(roundOff),
+          grandTotal: parseFloat(grandTotal),
+        },
+        invoiceList: list.map((item, index) => ({
+          id: invoiceIdAfterDB,
+          srNo: parseFloat(item.srNo),
+          productDetail: item.productDetail,
+          kgOrGram: parseFloat(item.kgOrGram),
+          rate: parseFloat(item.rate),
+          value: parseFloat(item.value),
+          disc: parseFloat(item.disc),
+          afterDisc: parseFloat(item.afterDisc),
+        })),
+      };
 
-    axios
-      .post(`${BASE_URL}/invoices`, dataToSend)
-      .then((response) => {
-        console.log("Data received:", response.data);
-        setInvoiceIdAfterDB(response.data);
-        setShowInvoice(true);
-        toast.success("Bill Generated!");
-      })
-      .catch((error) => {
-        console.error("There was a problem with the Axios request:", error);
-        toast.error("Failed");
-      });
+      console.log(`\n${dataToSend} of the Billn\n`);
+      axios
+        .put(`${BASE_URL}/invoices/${invoiceIdAfterDB}`, dataToSend)
+        .then((response) => {
+          console.log("Data updated:", response.data);
+          console.log(dataToSend);
+          setShowInvoice(true);
+          toast.success("Invoice updated!");
+        })
+        .catch((error) => {
+          console.error("There was a problem with the Axios request:", error);
+          toast.error("Failed to update invoice");
+        });
+    } else {
+      const dataToSend = {
+        clientDetails: {
+          clientName: clientName,
+          clientAddress: clientAddress,
+          clientGst: clientGst,
+          clientPos: clientPos,
+          clientState: clientState,
+          clientStateCode: clientStateCode,
+          invoiceDate: invoiceDate,
+        },
+        invoiceDetails: {
+          paymentType: paymentType,
+          totalValue: parseFloat(totalValue),
+          totalDiscount: parseFloat(totalDiscount),
+          totalAfterDiscount: parseFloat(totalAfterDiscount),
+          totalCgst: parseFloat(totalCgst),
+          totalSgst: parseFloat(totalSgst),
+          shippingCharges: parseFloat(shippingCharges),
+          roundOff: parseFloat(roundOff),
+          grandTotal: parseFloat(grandTotal),
+        },
+        invoiceList: list.map((item) => ({
+          srNo: parseInt(item.srNo),
+          productDetail: item.productDetail,
+          kgOrGram: parseFloat(item.kgOrGram),
+          rate: parseFloat(item.rate),
+          value: parseFloat(item.value),
+          disc: parseFloat(item.disc),
+          afterDisc: parseFloat(item.afterDisc),
+        })),
+      };
+      axios
+        .post(`${BASE_URL}/invoices`, dataToSend)
+        .then((response) => {
+          console.log("Data received:", response.data);
+          setInvoiceIdAfterDB(response.data.invoiceIdAfterDB);
+          setInvoiceListIds(response.data.invoiceDetailsIdAfterDB);
+
+          setShowInvoice(true);
+          toast.success("Bill Generated!");
+        })
+        .catch((error) => {
+          console.error("There was a problem with the Axios request:", error);
+          toast.error("Failed");
+        });
+    }
   };
 
   return (
@@ -171,6 +223,7 @@ function Main() {
             showInvoice={showInvoice}
             setShowInvoice={setShowInvoice}
             invoiceIdAfterDB={invoiceIdAfterDB}
+            setInvoiceIdAfterDB={setInvoiceIdAfterDB}
           />
         ) : (
           <>
@@ -201,6 +254,8 @@ function Main() {
               showInvoice={showInvoice}
               setShowInvoice={setShowInvoice}
               viewObject={viewObject}
+              invoiceIdAfterDB={invoiceIdAfterDB}
+              setInvoiceIdAfterDB={setInvoiceIdAfterDB}
             />
           </>
         )}
