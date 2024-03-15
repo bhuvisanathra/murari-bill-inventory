@@ -6,6 +6,7 @@ import ViewInvoicePage from "./components/Pages/ViewInvoicePage";
 import ApiInvoiceTemplete from "./components/Pages/ApiInvoiceTemplete";
 import ViewProductList from "./components/Pages/ViewProductList";
 import NotFoundPage from "./components/Pages/NotFoundPage";
+import Summary from "./components/Pages/Summary";
 
 const RouteConfig = () => {
   return (
@@ -15,6 +16,7 @@ const RouteConfig = () => {
         <Route path="/invoices" element={<ViewInvoicePage />} />
         <Route path="/invoices/:id" element={<ApiInvoiceTemplete />} />
         <Route path="/product" element={<ViewProductList />} />
+        <Route path="/summary" element={<Summary />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

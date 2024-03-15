@@ -129,11 +129,13 @@ function TableForm({
               onChange={(e) => handleProductChange(e.target.value)}
             >
               <option value="">Select Product</option>
-              {products.map((product) => (
-                <option key={product.productId} value={product.productName}>
-                  {product.productName}
-                </option>
-              ))}
+              {products.length > 0 &&
+                products.map((product) => (
+                  <option key={product.productId} value={product.productName}>
+                    {product.productName}
+                  </option>
+                ))}
+              w
             </select>
           </div>
 
