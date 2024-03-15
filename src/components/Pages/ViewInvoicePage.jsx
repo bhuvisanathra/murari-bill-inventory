@@ -15,6 +15,9 @@ const ViewInvoicePage = () => {
   const [entriesPerPage] = useState(20);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
+  const [sortBy, setSortBy] = useState(null);
+  const [sortByDate, setSortByDate] = useState(null);
+  const [sortByPaymentType, setSortByPaymentType] = useState(null);
 
   useEffect(() => {
     fetchClients();
@@ -37,8 +40,16 @@ const ViewInvoicePage = () => {
   };
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1);
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    if (query === "") {
+      fetchClients(); // Fetch clients again to reset the list
+    } else {
+      const filteredClients = clients.filter((client) =>
+        client.cd.clientName.toLowerCase().includes(query)
+      );
+      setClients(filteredClients);
+    }
   };
 
   const handleDelete = (clientId) => {
@@ -57,17 +68,53 @@ const ViewInvoicePage = () => {
     }
   };
 
-  const filteredClients = clients.filter((client) =>
-    client.cd.clientName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleSortByDate = (value) => {
+    setSortByDate(value);
+    sortClientsByDate(value);
+  };
+
+  const handleSortByPaymentType = (value) => {
+    setSortByPaymentType(value);
+    sortClientsByPaymentType(value);
+  };
+
+  const sortClientsByDate = (sortByDate) => {
+    const sortedClients = [...clients].sort((a, b) => {
+      const dateA = new Date(a.cd.clientDate);
+      const dateB = new Date(b.cd.clientDate);
+      switch (sortByDate) {
+        case "day":
+          return dateA.getDate() - dateB.getDate();
+        case "month":
+          return dateA.getMonth() - dateB.getMonth();
+        case "year":
+          return dateA.getFullYear() - dateB.getFullYear();
+        default:
+          return 0;
+      }
+    });
+    setClients(sortedClients);
+  };
+
+  const sortClientsByPaymentType = (sortByPaymentType) => {
+    const sortedClients = [...clients].sort((a, b) => {
+      switch (sortByPaymentType) {
+        case "cash":
+          return a.id.paymentType.localeCompare(b.id.paymentType);
+        case "MFG Customer":
+          // Assuming MFG Customer is a specific payment type
+          return a.id.paymentType === "MFG Customer" ? -1 : 1;
+        default:
+          return 0;
+      }
+    });
+    setClients(sortedClients);
+  };
 
   // Pagination
   const indexOfLastEntry = currentPage * entriesPerPage;
   const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
-  const currentEntries = filteredClients.slice(
-    indexOfFirstEntry,
-    indexOfLastEntry
-  );
+  const currentEntries = clients.slice(indexOfFirstEntry, indexOfLastEntry);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -78,13 +125,46 @@ const ViewInvoicePage = () => {
         <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
           Selected Items
         </h3>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearch}
-          placeholder="Search by client name"
-          className="mb-3 p-2 border border-gray-300 rounded-md"
-        />
+        <div className="flex flex-wrap items-center mb-3">
+          {/* Full width input box */}
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearch}
+            placeholder="Search by client name"
+            style={{
+              width: "100%", // Full width for mobile devices
+              marginBottom: "8px", // Add some margin at the bottom
+            }}
+            className="p-2 border border-gray-300 rounded-md mr-2"
+          />
+          {/* Two dropdowns sharing width */}
+          <div className="flex flex-wrap items-center w-full">
+            <select
+              value={sortByDate}
+              onChange={(e) => handleSortByDate(e.target.value)}
+              className="p-2 border border-gray-300 rounded-md mr-2"
+              style={{ flex: "1", marginRight: "8px" }} // Each dropdown takes half width on mobile
+            >
+              <option value="">Sort</option>
+              <option value="day">Day</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+            </select>
+            {/* Dropdown for sorting by payment type */}
+            <select
+              value={sortByPaymentType}
+              onChange={(e) => handleSortByPaymentType(e.target.value)}
+              className="p-2 border border-gray-300 rounded-md"
+              style={{ flex: "1" }} // Each dropdown takes half width on mobile
+            >
+              <option value="">Type</option>
+              <option value="cash">Cash</option>
+              <option value="MFG Customer">MFG Cust</option>
+            </select>
+          </div>
+        </div>
+
         <div className="overflow-x-auto">
           <table className="mt-5 mb-5 w-full border-2">
             <thead>
@@ -113,7 +193,9 @@ const ViewInvoicePage = () => {
                   <td className="p-2">{client.id.paymentType}</td>
                   <td className="p-2">{client.cd.clientName}</td>
                   <td className="p-2">{client.cd.clientDate}</td>
-                  <td className="p-2">{client.id.grandTotal}</td>
+                  <td className="p-2">
+                    {Math.round(Math.ceil(client.id.grandTotal))}
+                  </td>
                   <td colSpan="2" className="p-2">
                     <button onClick={() => handleViewInvoice(client.cd.id)}>
                       <CiViewBoard className="text-blue-600 font-bold text-xl" />
@@ -132,7 +214,7 @@ const ViewInvoicePage = () => {
         {/* Pagination */}
         <div className="flex justify-center">
           {Array.from(
-            { length: Math.ceil(filteredClients.length / entriesPerPage) },
+            { length: Math.ceil(clients.length / entriesPerPage) },
             (_, index) => (
               <button
                 key={index}

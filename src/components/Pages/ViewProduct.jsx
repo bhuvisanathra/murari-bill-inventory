@@ -73,7 +73,9 @@ export const ViewProduct = ({
               <tr key={product.id} className="text-center">
                 <td className="p-2">{product.id}</td>
                 <td className="p-2">{product.productName}</td>
-                <td className="p-2">{product.productPrice}</td>
+                <td className="p-2">
+                  {Math.round(Math.ceil(product.productPrice))}
+                </td>
                 <td className="p-2" colSpan={2}>
                   <button onClick={() => handleViewProduct(product)}>
                     <MdEdit className="text-blue-600 font-bold text-xl" />

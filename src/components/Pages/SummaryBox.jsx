@@ -11,6 +11,10 @@ export const Summary = () => {
   const [showCustomer, setShowCustomer] = useState(true);
   const [showProuct, setShowProduct] = useState(false);
   const [showSales, setShowSale] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [entriesPerPage] = useState(10);
+
   const navigate = useNavigate();
 
   const fetchCustomers = async () => {
@@ -38,7 +42,7 @@ export const Summary = () => {
       const response = await axios.get(`${BASE_URL}/analysis/sale`);
       // console.log(response.data); // Ensure you're getting the correct data structure
       setSales(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log("Error fetching customers:", error);
     }
@@ -56,6 +60,20 @@ export const Summary = () => {
       state: { clientData: selectedClient },
     });
   };
+
+  const indexOfLastEntry = currentPage * entriesPerPage;
+  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+  const currentEntriesClient = clients.slice(
+    indexOfFirstEntry,
+    indexOfLastEntry
+  );
+  const currentEntriesProduct = product.slice(
+    indexOfFirstEntry,
+    indexOfLastEntry
+  );
+  const currentEntriesSales = sales.slice(indexOfFirstEntry, indexOfLastEntry);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -107,14 +125,14 @@ export const Summary = () => {
             <table className="mt-5 mb-5 w-full border-2">
               <thead>
                 <tr className="bg-gray-100 p-2">
-                  <th className="p-2">Bill No</th>
+                  <th className="p-1">Bill No</th>
                   <th className="p-2">Client Name</th>
                   <th className="p-2">Bill Amount</th>
-                  <th className="p-2">Show Bill</th>
+                  <th className="p-1">Show Bill</th>
                 </tr>
               </thead>
               <tbody>
-                {clients
+                {currentEntriesClient
                   .slice()
                   .sort((a, b) => b.id.grandTotal - a.id.grandTotal)
                   .map((client, index) => (
@@ -139,6 +157,22 @@ export const Summary = () => {
               </tbody>
             </table>
           </div>
+          <div className="flex justify-center">
+            {Array.from(
+              { length: Math.ceil(clients.length / entriesPerPage) },
+              (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => paginate(index + 1)}
+                  className={`mx-1 p-2 border border-gray-300 rounded-md ${
+                    currentPage === index + 1 ? "bg-blue-500 text-white" : ""
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+          </div>
         </>
       )}
 
@@ -151,14 +185,14 @@ export const Summary = () => {
             <table className="mt-5 mb-5 w-full border-2">
               <thead>
                 <tr className="bg-gray-100 p-2">
-                  <th className="p-2">No</th>
+                  <th className="p-1">No</th>
                   <th className="p-2">Product Name</th>
                   <th className="p-2">Product Quantity</th>
                   <th className="p-2">Total Price</th>
                 </tr>
               </thead>
               <tbody>
-                {product
+                {currentEntriesProduct
                   .slice()
                   .sort((a, b) => b.totalQuantity - a.totalQuantity) // Sort products by total quantity
                   .map((product, index) => (
@@ -176,6 +210,22 @@ export const Summary = () => {
                   ))}
               </tbody>
             </table>
+          </div>
+          <div className="flex justify-center">
+            {Array.from(
+              { length: Math.ceil(product.length / entriesPerPage) },
+              (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => paginate(index + 1)}
+                  className={`mx-1 p-2 border border-gray-300 rounded-md ${
+                    currentPage === index + 1 ? "bg-blue-500 text-white" : ""
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
           </div>
         </>
       )}
@@ -196,7 +246,7 @@ export const Summary = () => {
                 </tr>
               </thead>
               <tbody>
-                {sales
+                {currentEntriesSales
                   .slice()
                   .sort((a, b) => b.totalGrandTotal - a.totalGrandTotal) // Sort sales by total grand total
                   .map((sales, index) => (
@@ -217,9 +267,47 @@ export const Summary = () => {
               </tbody>
             </table>
           </div>
+          <div className="flex justify-center">
+            {Array.from(
+              { length: Math.ceil(sales.length / entriesPerPage) },
+              (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => paginate(index + 1)}
+                  className={`mx-1 p-2 border border-gray-300 rounded-md ${
+                    currentPage === index + 1 ? "bg-blue-500 text-white" : ""
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+          </div>
         </>
       )}
     </>
+  );
+};
+
+const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <nav>
+      <ul className="pagination">
+        {pageNumbers.map((number) => (
+          <li key={number} className="page-item">
+            <button onClick={() => paginate(number)} className="page-link">
+              {number}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 
