@@ -110,7 +110,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
                 2.50%
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {Math.round(sum * 0.025)}
+                {Math.round(Math.ceil(sum * 0.025))}
               </td>
             </tr>
 
@@ -122,7 +122,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
                 2.50%
               </td>
               <td colSpan="2" className="font-bold text-center">
-                {Math.round(sum * 0.025)}
+                {Math.round(Math.ceil(sum * 0.025))}
               </td>
             </tr>
 
@@ -159,7 +159,7 @@ function Table({ invoiceDetails, list, setList, totalDiscount, sum }) {
               </td>
               <td colSpan="2" className="font-bold text-center">
                 {sum +
-                  2 * Math.round(sum * 0.025) +
+                  2 * Math.round(Math.ceil(sum * 0.025)) +
                   parseInt(
                     invoiceDetails.shippingCharges
                       ? invoiceDetails.shippingCharges

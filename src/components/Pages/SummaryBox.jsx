@@ -100,7 +100,7 @@ export const Summary = () => {
 
       {showCustomer && (
         <>
-          <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
+          <h3 className="font-bold text-2xl mt-5 mb-5 relative border-b-2">
             Highest Bill Amount
           </h3>
           <div className="overflow-x-auto">
@@ -116,7 +116,7 @@ export const Summary = () => {
               <tbody>
                 {clients
                   .slice()
-                  .reverse()
+                  .sort((a, b) => b.id.grandTotal - a.id.grandTotal)
                   .map((client, index) => (
                     <tr
                       key={index}
@@ -126,7 +126,9 @@ export const Summary = () => {
                       {/* <td className="p-2">{index + 1}</td> */}
                       <td className="p-2">{client.cd.id}</td>
                       <td className="p-2">{client.cd.clientName}</td>
-                      <td className="p-2">{client.id.grandTotal}</td>
+                      <td className="p-2">
+                        {Math.round(client.id.grandTotal)}
+                      </td>
                       <td colSpan="2" className="p-2">
                         <button onClick={() => handleViewInvoice(client.cd.id)}>
                           <CiViewBoard className="text-blue-600 font-bold text-xl" />
@@ -142,7 +144,7 @@ export const Summary = () => {
 
       {showProuct && (
         <>
-          <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
+          <h3 className="font-bold text-2xl mt-5 mb-5 relative border-b-2">
             Product Sale
           </h3>
           <div className="overflow-x-auto">
@@ -156,19 +158,22 @@ export const Summary = () => {
                 </tr>
               </thead>
               <tbody>
-                {product.slice().map((product, index) => (
-                  <tr
-                    key={index}
-                    className="text-center"
-                    style={{ marginBottom: "5px" }}
-                  >
-                    {/* <td className="p-2">{index + 1}</td> */}
-                    <td className="p-2">{index + 1}</td>
-                    <td className="p-2">{product.productDetail}</td>
-                    <td className="p-2">{product.totalQuantity}</td>
-                    <td className="p-2">{product.totalValue}</td>
-                  </tr>
-                ))}
+                {product
+                  .slice()
+                  .sort((a, b) => b.totalQuantity - a.totalQuantity) // Sort products by total quantity
+                  .map((product, index) => (
+                    <tr
+                      key={index}
+                      className="text-center"
+                      style={{ marginBottom: "5px" }}
+                    >
+                      {/* <td className="p-2">{index + 1}</td> */}
+                      <td className="p-2">{index + 1}</td>
+                      <td className="p-2">{product.productDetail}</td>
+                      <td className="p-2">{product.totalQuantity}</td>
+                      <td className="p-2">{product.totalValue}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -177,7 +182,7 @@ export const Summary = () => {
 
       {showSales && (
         <>
-          <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
+          <h3 className="font-bold text-2xl mt-5 mb-5 relative border-b-2">
             Sales Report
           </h3>
           <div className="overflow-x-auto">
@@ -193,7 +198,7 @@ export const Summary = () => {
               <tbody>
                 {sales
                   .slice()
-                  .reverse()
+                  .sort((a, b) => b.totalGrandTotal - a.totalGrandTotal) // Sort sales by total grand total
                   .map((sales, index) => (
                     <tr
                       key={index}
@@ -204,7 +209,9 @@ export const Summary = () => {
                       {/* <td className="p-2">{client.cd.id}</td> */}
                       <td className="p-2">{sales.clientCount}</td>
                       <td className="p-2">{sales.paymentType}</td>
-                      <td className="p-2">{sales.totalGrandTotal}</td>
+                      <td className="p-2">
+                        {Math.round(sales.totalGrandTotal)}
+                      </td>
                     </tr>
                   ))}
               </tbody>
