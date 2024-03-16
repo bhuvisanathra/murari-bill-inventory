@@ -16,7 +16,7 @@ const RouteConfig = () => {
 
   useEffect(() => {
     const authTokens = JSON.parse(localStorage.getItem("authTokens"));
-    if (authTokens && authTokens.user && authTokens.user.authorities) {
+    if (authTokens) {
       setRole(authTokens.user.authorities[0].authority);
     } else {
       setRole("");
@@ -26,6 +26,7 @@ const RouteConfig = () => {
   return (
     <Router>
       <AuthProvider>
+        {console.log(role)}
         <Routes>
           <Route path="/" exact element={<Login />} />
           <Route path="/sign-in" exact element={<Login />} />
