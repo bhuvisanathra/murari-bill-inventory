@@ -27,6 +27,7 @@ const RouteConfig = () => {
     <Router>
       <AuthProvider>
         <Routes>
+          <Route path="/" exact element={<Login />} />
           <Route path="/sign-in" exact element={<Login />} />
           <Route
             path="/home"
