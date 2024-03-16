@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import BASE_URL from "../../services/urls";
-import axios from "axios";
 import { CiViewBoard } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import { getData } from "../../api/api";
 
 export const Summary = () => {
   const [clients, setClients] = useState([]);
@@ -19,9 +19,9 @@ export const Summary = () => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/analysis/client`);
-      // console.log(response.data); // Ensure you're getting the correct data structure
-      setClients(response.data);
+      const response = await getData(`${BASE_URL}/user/analysis/client`);
+      console.log(response);
+      setClients(response);
     } catch (error) {
       console.log("Error fetching customers:", error);
     }
@@ -29,9 +29,9 @@ export const Summary = () => {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/analysis/product`);
+      const response = await getData(`${BASE_URL}/user/analysis/product`);
       // console.log(response.data); // Ensure you're getting the correct data structure
-      setProduct(response.data);
+      setProduct(response);
     } catch (error) {
       console.log("Error fetching customers:", error);
     }
@@ -39,9 +39,9 @@ export const Summary = () => {
 
   const fetchSales = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/analysis/sale`);
+      const response = await getData(`${BASE_URL}/user/analysis/sale`);
       // console.log(response.data); // Ensure you're getting the correct data structure
-      setSales(response.data);
+      setSales(response);
       // console.log(response.data);
     } catch (error) {
       console.log("Error fetching customers:", error);

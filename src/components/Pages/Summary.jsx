@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import SwitchButtons from "../components/SwitchButtons";
-import axios from "axios";
-import BASE_URL from "../../services/urls";
 import SummaryBox from "./SummaryBox";
 
 const ViewProductList = () => {

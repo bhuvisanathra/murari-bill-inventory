@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BASE_URL from "../../services/urls";
 import { MdDelete, MdEdit } from "react-icons/md";
 import ConfirmationDialog from "../components/ConfirmationDialog ";
+import { deleteData } from "../../api/api";
 
 export const ViewProduct = ({
   filter,
@@ -19,25 +20,7 @@ export const ViewProduct = ({
   };
 
   const handleConfirmDelete = async (productId) => {
-    try {
-      const response = await fetch(`${BASE_URL}/product/${productId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        console.log("Product deleted successfully");
-        // Update the product list after successful deletion
-        setFilteredProducts(
-          filteredProducts.filter((product) => product.id !== productId)
-        );
-      } else {
-        console.error("Failed to delete product");
-      }
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
+    const response = deleteData(`${BASE_URL}/product/${productId}`);
   };
 
   return (
@@ -69,7 +52,7 @@ export const ViewProduct = ({
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product) => (
+            {filteredProducts?.map((product) => (
               <tr key={product.id} className="text-center">
                 <td className="p-2">{product.id}</td>
                 <td className="p-2">{product.productName}</td>

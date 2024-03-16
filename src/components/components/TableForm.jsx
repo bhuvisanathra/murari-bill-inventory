@@ -5,6 +5,7 @@ import { FaEdit } from "react-icons/fa";
 import Dialog from "./Dialog";
 import axios from "axios";
 import BASE_URL from "../../services/urls";
+import { getData } from "../../api/api";
 
 function TableForm({
   setInvoiceNumber,
@@ -22,9 +23,9 @@ function TableForm({
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/product`);
-      setProducts(response.data);
-      console.log(response.data); // productName and productPrice
+      const response = await getData(`${BASE_URL}/user/product`);
+      // console.log(response);
+      setProducts(response);
     } catch (error) {
       console.log("Error fetching products:", error);
     }
@@ -135,7 +136,7 @@ function TableForm({
                     {product.productName}
                   </option>
                 ))}
-              w
+              {/* Remove the extra 'w' */}
             </select>
           </div>
 
@@ -263,7 +264,7 @@ function TableForm({
                 afterDisc,
               }) => (
                 <tr
-                  key={id}
+                  key={id} // Add key prop with a unique value
                   className="text-center"
                   style={{ marginBottom: "5px" }}
                 >
@@ -287,6 +288,7 @@ function TableForm({
                 </tr>
               )
             )}
+
             <tr className="">
               <td
                 colSpan="5"

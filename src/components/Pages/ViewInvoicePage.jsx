@@ -3,9 +3,9 @@ import SwitchButtons from "../components/SwitchButtons";
 import { CiViewBoard } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
-import axios from "axios";
 import BASE_URL from "../../services/urls";
 import ConfirmationDialog from "../components/ConfirmationDialog ";
+import { deleteData, getData } from "../../api/api";
 
 const ViewInvoicePage = () => {
   const navigate = useNavigate();
@@ -16,8 +16,8 @@ const ViewInvoicePage = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
   const [sortBy, setSortBy] = useState(null);
-  const [sortByDate, setSortByDate] = useState(null);
-  const [sortByPaymentType, setSortByPaymentType] = useState(null);
+  const [sortByDate, setSortByDate] = useState("");
+  const [sortByPaymentType, setSortByPaymentType] = useState("");
 
   useEffect(() => {
     fetchClients();
@@ -25,8 +25,8 @@ const ViewInvoicePage = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/invoices`);
-      setClients(response.data);
+      const response = await getData(`${BASE_URL}/user/invoices`);
+      setClients(response);
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +59,7 @@ const ViewInvoicePage = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`${BASE_URL}/invoices/${selectedInvoiceId}`);
+      await deleteData(`${BASE_URL}/user/invoices/${selectedInvoiceId}`);
       fetchClients();
     } catch (error) {
       console.error("Error deleting invoice:", error);

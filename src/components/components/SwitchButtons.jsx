@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext.jsx";
 
 const Navbar = () => {
+  const { logoutUser, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [role, setRole] = useState(
+    JSON.parse(localStorage.getItem("authTokens")).user.authorities[0].authority
+  );
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -31,8 +36,8 @@ const Navbar = () => {
               </svg>
             </button>
             <span
-              className="text-white font-semibold text-3xl"
-              onClick={() => navigate("/")}
+              className="text-white font-semibold text-3xl min-w-fit"
+              onClick={() => navigate("/home")}
               style={{ cursor: "pointer" }}
             >
               Murari Farshan Gruh
@@ -40,28 +45,39 @@ const Navbar = () => {
           </div>
           <div className="hidden md:flex items-center space-x-4">
             <button
-              className="rounded-md text-white font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
-              onClick={() => navigate("/")}
+              className="rounded-md text-white font-bold py-2 px-3 min-w-fit bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
+              onClick={() => navigate("/home")}
             >
-              Generate New Invoice
+              Add Bill
             </button>
+            {role == "ADMIN" ? (
+              <button
+                className="rounded-md min-w-fit text-white  font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
+                onClick={() => navigate("/invoices")}
+              >
+                Past Bills
+              </button>
+            ) : null}
             <button
-              className="rounded-md text-white font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
-              onClick={() => navigate("/invoices")}
-            >
-              Manage Invoice
-            </button>
-            <button
-              className="rounded-md text-white font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
+              className="rounded-md text-white min-w-fit font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
               onClick={() => navigate("/product")}
             >
-              Manage Product
+              Products
             </button>
+            {role == "ADMIN" ? (
+              <button
+                className="rounded-md text-white min-w-fit font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
+                onClick={() => navigate("/summary")}
+              >
+                Analysis
+              </button>
+            ) : null}
+
             <button
-              className="rounded-md text-white font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
-              onClick={() => navigate("/summary")}
+              className="rounded-md text-white min-w-fit font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
+              onClick={logoutUser}
             >
-              Analysis
+              Logout
             </button>
           </div>
         </div>
@@ -70,27 +86,37 @@ const Navbar = () => {
         <div className="md:hidden mt-4">
           <button
             className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
           >
-            Generate New Invoice
+            Add Bill
           </button>
-          <button
-            className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm mt-2"
-            onClick={() => navigate("/invoices")}
-          >
-            Manage Invoice
-          </button>
+          {role == "ADMIN" ? (
+            <button
+              className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm mt-2"
+              onClick={() => navigate("/invoices")}
+            >
+              Past Bills
+            </button>
+          ) : null}
           <button
             className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm mt-2"
             onClick={() => navigate("/product")}
           >
-            Manage Product
+            Products
           </button>
+          {role == "ADMIN" ? (
+            <button
+              className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm mt-2"
+              onClick={() => navigate("/summary")}
+            >
+              Report
+            </button>
+          ) : null}
           <button
             className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm mt-2"
-            onClick={() => navigate("/summary")}
+            onClick={logoutUser}
           >
-            Report
+            Logout
           </button>
         </div>
       )}

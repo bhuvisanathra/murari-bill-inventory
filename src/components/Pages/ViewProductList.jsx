@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import SwitchButtons from "../components/SwitchButtons";
-import axios from "axios";
 import BASE_URL from "../../services/urls";
 import { ProductEditDialog } from "../components/ProductEditDialog";
 import ViewProduct from "./ViewProduct";
 import { useNavigate } from "react-router-dom";
 import Dialog from "../components/Dialog";
+import { deleteData, getData, postData, putData } from "../../api/api";
 
 const ViewProductList = () => {
   const [products, setProducts] = useState([]);
@@ -18,8 +18,8 @@ const ViewProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/product`);
-      setProducts(response.data);
+      const response = await getData(`${BASE_URL}/user/product`);
+      setProducts(response);
     } catch (error) {
       console.log("Error fetching products:", error);
     }
@@ -39,8 +39,7 @@ const ViewProductList = () => {
 
   const handleUpdateProduct = () => {
     if (selectedProduct) {
-      axios
-        .put(`${BASE_URL}/product`, selectedProduct)
+      putData(`${BASE_URL}/user/product`, selectedProduct)
         .then((response) => {
           console.log("Product updated");
           fetchProducts();
@@ -59,7 +58,7 @@ const ViewProductList = () => {
       setShowDialog(true);
     } else {
       try {
-        await axios.post(`${BASE_URL}/product`, newProduct);
+        await postData(`${BASE_URL}/user/product`, newProduct);
         fetchProducts();
         setAddProduct(false);
         setIsAddingProduct(false); // Redirect to view product screen after adding
@@ -72,14 +71,14 @@ const ViewProductList = () => {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      await axios.delete(`${BASE_URL}/product/${productId}`);
+      await deleteData(`${BASE_URL}/user/product/${productId}`);
       setProducts(products.filter((product) => product.id !== productId));
     } catch (error) {
       console.error("Error deleting product:", error);
     }
   };
 
-  const filteredProducts = products.filter((product) =>
+  const filteredProducts = products?.filter((product) =>
     product.productName.toLowerCase().includes(filter.toLowerCase())
   );
 

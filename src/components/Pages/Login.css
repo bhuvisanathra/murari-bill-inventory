@@ -1,10 +1,9 @@
-/* Login.css */
 .login-container {
     max-width: 400px;
     margin: 100px auto;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #f9f9f9;
 }
 
@@ -25,7 +24,7 @@ input[type="password"] {
     border-radius: 3px;
 }
 
-button {
+.loginbutton {
     display: block;
     width: 100%;
     padding: 10px;

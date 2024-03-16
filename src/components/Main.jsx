@@ -1,21 +1,21 @@
 import { useState, useRef } from "react";
-import axios from "axios";
 import InvoiceTemplete from "./Pages/InvoiceTemplete.jsx";
 import EditInvoicePage from "../components/Pages/EditInvoicePage.jsx";
 import SwitchButtons from "./components/SwitchButtons.jsx";
 import BASE_URL from "../services/urls.js";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { postData, putData } from "../api/api.jsx";
 
 function Main() {
   const currentDate = new Date().toISOString().split("T")[0];
   const [paymentType, setPaymentType] = useState("Cash");
   const [showInvoice, setShowInvoice] = useState(false);
-  const [clientName, setClientName] = useState("");
-  const [clientAddress, setClientAddress] = useState("");
-  const [invoiceNumber, setInvoiceNumber] = useState("");
-  const [clientGst, setClientGst] = useState("");
-  const [clientPos, setClientPos] = useState("");
+  const [clientName, setClientName] = useState(" ");
+  const [clientAddress, setClientAddress] = useState(" ");
+  const [invoiceNumber, setInvoiceNumber] = useState(" ");
+  const [clientGst, setClientGst] = useState(" ");
+  const [clientPos, setClientPos] = useState(" ");
   const [clientState, setClientState] = useState("Gujarat");
   const [clientStateCode, setClientStateCode] = useState("24");
   const [invoiceDate, setInvoiceDate] = useState(currentDate);
@@ -27,7 +27,7 @@ function Main() {
   // Table UseState
   const [invoiceDetails, setInvoiceDetails] = useState({
     srNo: 0,
-    productDetail: "",
+    productDetail: " ",
     kgOrGram: 1,
     rate: 0,
     value: 0,
@@ -83,7 +83,7 @@ function Main() {
     }));
   };
 
-  const viewObject = () => {
+  const viewObject = async () => {
     if (!clientName || !clientAddress || !clientState || list.length === 0) {
       toast.error("Please fill in all required fields.");
       return;
@@ -125,19 +125,15 @@ function Main() {
         })),
       };
 
-      console.log(`\n${dataToSend} of the Billn\n`);
-      axios
-        .put(`${BASE_URL}/invoices/${invoiceIdAfterDB}`, dataToSend)
-        .then((response) => {
-          console.log("Data updated:", response.data);
-          console.log(dataToSend);
-          setShowInvoice(true);
-          toast.success("Invoice updated!");
-        })
-        .catch((error) => {
-          console.error("There was a problem with the Axios request:", error);
-          toast.error("Failed to update invoice");
-        });
+      console.log(`\n${dataToSend} of the Bill\n`);
+      const response = await putData(
+        `${BASE_URL}/user/invoices/${invoiceIdAfterDB}`,
+        dataToSend
+      );
+      console.log("Data updated:", response);
+      // console.log(dataToSend);
+      setShowInvoice(true);
+      toast.success("Invoice updated!");
     } else {
       const dataToSend = {
         clientDetails: {
@@ -170,20 +166,12 @@ function Main() {
           afterDisc: parseFloat(item.afterDisc),
         })),
       };
-      axios
-        .post(`${BASE_URL}/invoices`, dataToSend)
-        .then((response) => {
-          console.log("Data received:", response.data);
-          setInvoiceIdAfterDB(response.data.invoiceIdAfterDB);
-          setInvoiceListIds(response.data.invoiceDetailsIdAfterDB);
-
-          setShowInvoice(true);
-          toast.success("Bill Generated!");
-        })
-        .catch((error) => {
-          console.error("There was a problem with the Axios request:", error);
-          toast.error("Failed");
-        });
+      const response = await postData(`${BASE_URL}/user/invoices`, dataToSend);
+      // console.log("Data received:", response);
+      setInvoiceIdAfterDB(response.invoiceIdAfterDB);
+      setInvoiceListIds(response.invoiceDetailsIdAfterDB);
+      setShowInvoice(true);
+      toast.success("Bill Generated!");
     }
   };
 
@@ -192,6 +180,7 @@ function Main() {
       <SwitchButtons />
       <ToastContainer
         position="top-right"
+        className="min-w-fit"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

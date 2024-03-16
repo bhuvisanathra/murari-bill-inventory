@@ -13,6 +13,7 @@ import SwitchButtons from "../components/SwitchButtons";
 import BASE_URL from "../../services/urls";
 import Loading from "./Loading";
 import NoDataPage from "./NoDataPage";
+import { getData } from "../../api/api";
 
 const InvoiceeTemplate = () => {
   const { id } = useParams();
@@ -23,10 +24,10 @@ const InvoiceeTemplate = () => {
   useEffect(() => {
     const fetchClientData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/invoices/${id}`);
-        setClientData(response.data);
+        const response = await getData(`${BASE_URL}/user/invoices/${id}`);
+        setClientData(response);
         setLoading(false);
-        // console.log(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log(error);
         setLoading(false);
