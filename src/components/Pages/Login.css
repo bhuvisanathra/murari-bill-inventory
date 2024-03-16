@@ -1,10 +1,15 @@
 .login-container {
-    max-width: 400px;
-    margin: 100px auto;
+    min-width: 350px;
+    min-height: 505x;
     padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #f9f9f9;
+
 }
 
 .input-container {
@@ -42,4 +47,22 @@ button:hover {
 .error-message {
     color: red;
     margin-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        background-image: url("../../assets/images/login_background.jpeg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .login-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 350px;
+        min-height: 505x;
+    }
 }
