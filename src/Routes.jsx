@@ -10,6 +10,7 @@ import ProtectedRoute from "./context/ProtectedRoutes";
 import Login from "./components/Pages/Login";
 import ViewInvoicePage from "./components/Pages/ViewInvoicePage";
 import ApiInvoiceTemplete from "./components/Pages/ApiInvoiceTemplete";
+import Register from "./components/Pages/Register";
 
 const RouteConfig = () => {
   const [role, setRole] = useState("");
@@ -26,10 +27,11 @@ const RouteConfig = () => {
   return (
     <Router>
       <AuthProvider>
-        {console.log(role)}
+        {console.log(role == "ADMIN")}
         <Routes>
           <Route path="/" exact element={<Login />} />
-          <Route path="/sign-in" exact element={<Login />} />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/register" exact element={<Register />} />
           <Route
             path="/home"
             element={

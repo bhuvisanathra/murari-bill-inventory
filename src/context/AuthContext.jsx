@@ -51,13 +51,13 @@ export const AuthProvider = ({ children }) => {
     const data = await response.json();
 
     if (data && data.jwt) {
-      localStorage.setItem("authTokens", JSON.stringify(data)); // Store the JWT token in local storage
+      localStorage.setItem("authTokens", JSON.stringify(data));
       setAuthTokens(data.jwt);
-      setUser(jwtDecode(data.jwt)); // Decode the JWT token
+      setUser(jwtDecode(data.jwt));
       toast.success(`Welcome!`);
       navigate("/home");
     } else {
-      toast.error("Invalid username or password!"); // Display toast message
+      toast.error("Invalid username or password!");
     }
   };
 
@@ -77,14 +77,11 @@ export const AuthProvider = ({ children }) => {
     const data = await response.json();
 
     if (response.ok) {
-      // Wait for the role state to be set before displaying the success message
-      setRole(data.role); // Assuming the role is returned in the response
+      setRole(data.role);
       toast.success("Welcome");
-      setTimeout(() => {
-        navigate("/home");
-      }, 2000);
+      navigate("/login");
     } else {
-      toast.error("Registration failed!"); // Display toast message
+      toast.error("Registration failed!");
     }
   };
 
@@ -92,7 +89,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("authTokens");
     setAuthTokens(null);
     setUser(null);
-    navigate("/sign-in");
+    navigate("/login");
   };
 
   const contextData = {

@@ -9,6 +9,7 @@ const Navbar = () => {
   const [role, setRole] = useState(
     JSON.parse(localStorage.getItem("authTokens")).user.authorities[0].authority
   );
+  console.log(role);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
