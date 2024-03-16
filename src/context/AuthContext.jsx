@@ -1,7 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-
 import { useNavigate } from "react-router-dom";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import BASE_URL from "../services/urls";
 
 const AuthContext = createContext();
@@ -30,7 +32,6 @@ export const AuthProvider = ({ children }) => {
           ? user.user.authorities[0].authority
           : null;
       setRole(userRole);
-      // console.log(userRole);
     }
   }, [user]);
 
@@ -49,19 +50,14 @@ export const AuthProvider = ({ children }) => {
 
     const data = await response.json();
 
-    console.log("Data received from server:", data.jwt); // Log the JWT token received from the server
-
-    if (data) {
+    if (data && data.jwt) {
       localStorage.setItem("authTokens", JSON.stringify(data)); // Store the JWT token in local storage
       setAuthTokens(data.jwt);
-      if (typeof data.jwt === "string") {
-        setUser(jwtDecode(data.jwt)); // Decode the JWT token
-      } else {
-        console.error("Invalid token format:", data.jwt);
-      }
+      setUser(jwtDecode(data.jwt)); // Decode the JWT token
+      toast.success(`Welcome!`);
       navigate("/home");
     } else {
-      alert("Something went wrong while logging in the user!");
+      toast.error("Invalid username or password!"); // Display toast message
     }
   };
 
@@ -78,14 +74,17 @@ export const AuthProvider = ({ children }) => {
         email: e.target.email.value,
       }),
     });
-    // console.log(response.body);
     const data = await response.json();
-    // console.log("Data received from server:", data); // Log the JWT token received from the server
 
-    if (data) {
-      navigate("/home");
+    if (response.ok) {
+      // Wait for the role state to be set before displaying the success message
+      setRole(data.role); // Assuming the role is returned in the response
+      toast.success("Welcome");
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
     } else {
-      alert("Something went wrong while logging in the user!");
+      toast.error("Registration failed!"); // Display toast message
     }
   };
 
@@ -105,6 +104,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextData}>
+      <ToastContainer
+        position="top-right"
+        className="min-w-fit"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
+      {children}
+    </AuthContext.Provider>
   );
 };

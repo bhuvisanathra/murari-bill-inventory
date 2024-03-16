@@ -1,4 +1,4 @@
-// Login.js
+// @ts-ignore
 import React, { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import "./Login.css"; // Import your CSS file for styling
@@ -41,6 +41,7 @@ const Login = () => {
               className="mb-3 p-2 border rounded"
               placeholder="Username"
               required
+              autocomplete="off"
             />
             <input
               type="password"
@@ -48,6 +49,7 @@ const Login = () => {
               className="mb-3 p-2 border rounded"
               placeholder="Password"
               required
+              autocomplete="off"
             />
             <button
               className="bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
@@ -67,6 +69,7 @@ const Login = () => {
               name="email"
               className="mb-3 p-2 border rounded min-w-full"
               placeholder="Email"
+              autocomplete="off"
             />
 
             <input
@@ -75,6 +78,7 @@ const Login = () => {
               className="mb-3 p-2 border rounded"
               placeholder="Username"
               required
+              autocomplete="off"
             />
             <input
               type="password"
@@ -82,6 +86,7 @@ const Login = () => {
               className="mb-3 p-2 border rounded"
               placeholder="Password"
               required
+              autocomplete="off"
             />
             <button
               className="bg-blue-500 min-w-full text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300 mb-3 p-2 border rounded"

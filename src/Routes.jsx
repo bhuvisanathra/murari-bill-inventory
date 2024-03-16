@@ -36,7 +36,7 @@ const RouteConfig = () => {
               </ProtectedRoute>
             }
           />
-          {role === "ADMIN" && (
+          {role == "ADMIN" && (
             <>
               <Route
                 path="/invoices"
@@ -73,7 +73,7 @@ const RouteConfig = () => {
             }
           />
           <Route
-            path="*"
+            path="/*"
             element={
               <ProtectedRoute>
                 <NotFoundPage />

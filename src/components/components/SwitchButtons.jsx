@@ -113,7 +113,7 @@ const Navbar = () => {
             </button>
           ) : null}
           <button
-            className="block rounded-md text-white font-bold py-2 px-4 w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-sm mt-2"
+            className="block rounded-md text-white font-bold py-2 px-4 w-full bg-red-500 hover:bg-red-600 transition-colors duration-300 text-sm mt-2"
             onClick={logoutUser}
           >
             Logout
