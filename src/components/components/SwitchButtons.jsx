@@ -10,7 +10,6 @@ const Navbar = () => {
   const [role, setRole] = useState(
     JSON.parse(localStorage.getItem("authTokens")).user.authorities[0].authority
   );
-  console.log(role);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -67,12 +66,21 @@ const Navbar = () => {
               Products
             </button>
             {role == "ADMIN" ? (
-              <button
-                className="rounded-md text-white min-w-fit font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
-                onClick={() => navigate("/summary")}
-              >
-                Analysis
-              </button>
+              <>
+                <button
+                  className="rounded-md text-white min-w-fit font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
+                  onClick={() => navigate("/summary")}
+                >
+                  Analysis
+                </button>
+
+                <button
+                  className="rounded-md text-white min-w-fit font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
+                  onClick={() => navigate("/users")}
+                >
+                  Users
+                </button>
+              </>
             ) : null}
 
             <button

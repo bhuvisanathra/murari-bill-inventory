@@ -11,6 +11,7 @@ import Login from "./components/Pages/Login";
 import ViewInvoicePage from "./components/Pages/ViewInvoicePage";
 import ApiInvoiceTemplete from "./components/Pages/ApiInvoiceTemplete";
 import Register from "./components/Pages/Register";
+import ViewUser from "./components/Pages/ViewUserPage";
 
 const RouteConfig = () => {
   const [role, setRole] = useState("ADMIN");
@@ -57,6 +58,14 @@ const RouteConfig = () => {
                 element={
                   <ProtectedRoute>
                     <ApiInvoiceTemplete />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/users"
+                element={
+                  <ProtectedRoute>
+                    <ViewUser />
                   </ProtectedRoute>
                 }
               />
