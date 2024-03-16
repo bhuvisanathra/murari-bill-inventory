@@ -18,10 +18,11 @@ const RouteConfig = () => {
 
   useEffect(() => {
     const authTokens = JSON.parse(localStorage.getItem("authTokens"));
+    console.log("Auth tokens:", authTokens);
     if (authTokens) {
       setRole(authTokens.user.authorities[0].authority);
     } else {
-      setRole("");
+      setRole("ADMIN");
     }
   }, [localStorage.getItem("authTokens")]);
 

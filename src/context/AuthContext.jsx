@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useReducer } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
@@ -12,6 +12,7 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
   const [role, setRole] = useState();
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
   const [user, setUser] = useState(() =>
     localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))
@@ -52,6 +53,7 @@ export const AuthProvider = ({ children }) => {
 
     if (data && data.jwt) {
       localStorage.setItem("authTokens", JSON.stringify(data));
+      forceUpdate();
       setAuthTokens(data.jwt);
       setUser(jwtDecode(data.jwt));
       toast.success(`Welcome!`);
