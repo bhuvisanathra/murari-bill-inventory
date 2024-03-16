@@ -13,7 +13,10 @@ import ApiInvoiceTemplete from "./components/Pages/ApiInvoiceTemplete";
 import Register from "./components/Pages/Register";
 
 const RouteConfig = () => {
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState(
+    JSON.parse(localStorage.getItem("authTokens")).user.authorities[0].authority
+  );
+  console.log(role);
 
   useEffect(() => {
     const authTokens = JSON.parse(localStorage.getItem("authTokens"));
