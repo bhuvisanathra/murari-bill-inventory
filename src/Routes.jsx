@@ -13,7 +13,7 @@ import ApiInvoiceTemplete from "./components/Pages/ApiInvoiceTemplete";
 import Register from "./components/Pages/Register";
 
 const RouteConfig = () => {
-  const [role, setRole] = useState("USER");
+  const [role, setRole] = useState("ADMIN");
   console.log(role);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const RouteConfig = () => {
     } else {
       setRole("");
     }
-  }, []);
+  }, [localStorage.getItem("authTokens")]);
 
   return (
     <Router>
