@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 p-4 ">
+    <nav className="bg-gray-800 p-4 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
@@ -84,7 +84,7 @@ const Navbar = () => {
             ) : null}
 
             <button
-              className="rounded-md text-white min-w-fit font-bold py-2 px-3 bg-blue-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
+              className="rounded-md text-white min-w-fit font-bold py-2 px-3 bg-red-500 hover:bg-transparent hover:text-white-500 transition-all duration-300"
               onClick={logoutUser}
             >
               Logout
