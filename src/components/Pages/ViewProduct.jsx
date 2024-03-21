@@ -25,10 +25,6 @@ export const ViewProduct = ({
 
   return (
     <>
-      <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
-        Products
-      </h3>
-
       <input
         type="text"
         placeholder="Search Product"

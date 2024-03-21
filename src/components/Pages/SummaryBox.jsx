@@ -175,7 +175,7 @@ export const Summary = () => {
 
   return (
     <>
-      <h2 className="font-bold text-3xl mb-5 border-b-2">Reports</h2>
+      <h2 className="font-bold text-2xl mb-5 border-b-2">Reports</h2>
       <div className="flex justify-center md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl  ">
         <button
           className={

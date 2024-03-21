@@ -90,7 +90,10 @@ const ViewProductList = () => {
       <SwitchButtons />
       <div className="flex bg-white flex-col justify-center m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl">
         {/* Buttons */}
-        <div className="flex justify-center md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl  ">
+        <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
+          Products
+        </h3>
+        <div className="flex justify-center md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl mb-5 ">
           <button
             className={`p-2 rounded shadow flex-grow bg-blue-500 text-white font-bold py-2 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300 mr-2 ${
               !isAddingProduct ? "bg-blue-500" : "bg-gray-500"
