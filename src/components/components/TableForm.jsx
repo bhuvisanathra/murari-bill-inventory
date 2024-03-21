@@ -129,10 +129,12 @@ function TableForm({
               value={invoiceDetails.productDetail}
               onChange={(e) => handleProductChange(e.target.value)}
             >
-              <option value="">Select Product</option>
+              <option key={0} value="">
+                Select Product
+              </option>
               {products.length > 0 &&
                 products.map((product) => (
-                  <option key={product.productId} value={product.productName}>
+                  <option key={product.id} value={product.productName}>
                     {product.productName}
                   </option>
                 ))}

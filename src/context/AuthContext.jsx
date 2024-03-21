@@ -76,11 +76,14 @@ export const AuthProvider = ({ children }) => {
         email: e.target.email.value,
       }),
     });
+    if (response.status == 401) {
+      toast.error("User already exists");
+    }
     const data = await response.json();
 
     if (response.ok) {
       setRole(data.role);
-      toast.success("Welcome");
+      toast.success("Welcome User!");
       navigate("/login");
     } else {
       toast.error("Registration failed!");

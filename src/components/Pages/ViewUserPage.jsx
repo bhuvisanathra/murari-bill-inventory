@@ -1,37 +1,34 @@
 import React, { useEffect, useState } from "react";
-import BASE_URL from "../../services/urls";
 import { MdDelete } from "react-icons/md";
 import { CiViewBoard } from "react-icons/ci";
-import { deleteData, getData } from "../../api/api";
 import SwitchButtons from "../components/SwitchButtons";
 import CustomDialog from "../components/UserDialog";
 import ConfirmationDialog from "../components/ConfirmationDialog ";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUser, fetchUser } from "../features/User/userSlice";
 
 export const ViewUser = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.user);
+
+  const user = state.data || [];
+
   const [list, setList] = useState([]);
   const [userToDelete, setUserToDelete] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getData(`${BASE_URL}/user/getAllUser`);
-        setList(response);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-    fetchUsers();
-  }, []);
+    if (!user.length) {
+      dispatch(fetchUser());
+    } else {
+      setList(user);
+    }
+  }, [dispatch, user]);
 
   const handleDelete = async (id) => {
-    try {
-      await deleteData(`${BASE_URL}/user/delete/${id}`);
-      setList(list.filter((user) => user.userId !== id));
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-    setUserToDelete(null); // Close the confirmation dialog after deletion
+    dispatch(deleteUser(id));
+    setUserToDelete(null);
   };
 
   const openCustomDialog = (user) => {
@@ -44,6 +41,20 @@ export const ViewUser = () => {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        className="min-w-fit"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
       <SwitchButtons />
       <div className="flex bg-white flex-col justify-center m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl">
         <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">

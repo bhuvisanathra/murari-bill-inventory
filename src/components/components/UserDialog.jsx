@@ -42,7 +42,7 @@ const CustomDialog = ({ isOpen, onClose, user, onDelete }) => {
             </p>
             <p className="mb-2">
               <span className="font-semibold">Role:</span>{" "}
-              {user?.authorities[user.userId - 1].authority}
+              {user?.authorities[0].authority}
             </p>
           </div>
           <div className="mt-6 flex justify-end">

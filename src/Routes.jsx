@@ -15,11 +15,11 @@ import ViewUser from "./components/Pages/ViewUserPage";
 
 const RouteConfig = () => {
   const [role, setRole] = useState("ADMIN");
-  console.log(role);
+  // console.log(role);
 
   useEffect(() => {
     const authTokens = JSON.parse(localStorage.getItem("authTokens"));
-    console.log("Auth tokens:", authTokens);
+    // console.log("Auth tokens:", authTokens);
     if (authTokens) {
       setRole(authTokens.user.authorities[0].authority);
     } else {
@@ -30,7 +30,7 @@ const RouteConfig = () => {
   return (
     <Router>
       <AuthProvider>
-        {console.log(role == "ADMIN")}
+        {/* {console.log(role == "ADMIN")} */}
         <Routes>
           <Route path="/" exact element={<Login />} />
           <Route path="/login" exact element={<Login />} />

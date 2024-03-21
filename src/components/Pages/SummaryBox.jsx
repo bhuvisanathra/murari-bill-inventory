@@ -128,7 +128,7 @@ export const Summary = () => {
   const fetchProduct = async () => {
     try {
       const response = await getData(`${BASE_URL}/user/analysis/product`);
-      // console.log(response.data); // Ensure you're getting the correct data structure
+      // console.log(response.data);
       setProduct(response);
     } catch (error) {
       console.log("Error fetching customers:", error);
@@ -138,7 +138,7 @@ export const Summary = () => {
   const fetchSales = async () => {
     try {
       const response = await getData(`${BASE_URL}/user/analysis/sale`);
-      // console.log(response.data); // Ensure you're getting the correct data structure
+      // console.log(response.data);
       setSales(response);
       // console.log(response.data);
     } catch (error) {
@@ -175,6 +175,7 @@ export const Summary = () => {
 
   return (
     <>
+      <h2 className="font-bold text-3xl mb-5 border-b-2">Reports</h2>
       <div className="flex justify-center md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl  ">
         <button
           className={
@@ -186,7 +187,7 @@ export const Summary = () => {
             setShowSale(false);
           }}
         >
-          Customer Report
+          Customer
         </button>
         <button
           className={
@@ -198,7 +199,7 @@ export const Summary = () => {
             setShowSale(false);
           }}
         >
-          Product Report
+          Product
         </button>
         <button
           className={
@@ -210,7 +211,7 @@ export const Summary = () => {
             setShowSale(true);
           }}
         >
-          Sales Report
+          Sales
         </button>
       </div>
 
@@ -276,11 +277,12 @@ export const Summary = () => {
 
       {showProuct && (
         <>
-          <div className="flex flex-row justify-center align-center mt-3 sm:flex flex-col">
+          <div className="xl:flex flex-row justify-between gap-0 align-center mt-3 l:flex-col">
             <div>
               <canvas
                 ref={productPieChartRef}
                 id="productPieChart"
+                className="l:mt-10 l:ml-10"
                 style={{ maxWidth: "100%", height: "auto" }}
               ></canvas>
             </div>
@@ -343,11 +345,12 @@ export const Summary = () => {
 
       {showSales && (
         <>
-          <div className="flex flex-row justify-center align-center mt-3 sm:flex flex-col">
+          <div className="xl:flex flex-row justify-between gap-0 align-center mt-3 l:flex-col">
             <div>
               <canvas
                 ref={pieChartRef}
                 id="pieChart"
+                className="l:mt-10 l:ml-10"
                 style={{ maxWidth: "100%", height: "auto" }}
               ></canvas>
             </div>
