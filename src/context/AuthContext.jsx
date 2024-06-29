@@ -63,30 +63,33 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const registerUser = async (e) => {
-    e.preventDefault();
-    const response = await fetch(`${BASE_URL}/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: e.target.username.value,
-        password: e.target.password.value,
-        email: e.target.email.value,
-      }),
-    });
-    if (response.status == 401) {
-      toast.error("User already exists");
-    }
-    const data = await response.json();
+  const registerUser = async ({ username, password, email }) => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password, email }),
+      });
 
-    if (response.ok) {
-      setRole(data.role);
-      toast.success("Welcome User!");
-      navigate("/login");
-    } else {
-      toast.error("Registration failed!");
+      if (response.status === 401) {
+        toast.error("User already exists");
+        return;
+      }
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setRole(data.role);
+        toast.success("Welcome User!");
+        navigate("/login");
+      } else {
+        toast.error("Registration failed!");
+      }
+    } catch (error) {
+      // console.error("Registration error:", error);
+      toast.error("An error occurred during registration");
     }
   };
 
