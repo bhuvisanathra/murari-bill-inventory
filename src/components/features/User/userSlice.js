@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../../../services/urls";
 import { deleteData, getData } from "../../../api/api";
-import { toast } from "react-toastify";
 
 // Thunk to fetch data
 export const fetchUser = createAsyncThunk("fetchUser", async () => {
@@ -12,11 +11,8 @@ export const fetchUser = createAsyncThunk("fetchUser", async () => {
 export const deleteUser = createAsyncThunk("deleteUser", async (id) => {
   try {
     await deleteData(`${BASE_URL}/user/delete/${id}`);
-    toast.success("User Deleted");
     return id;
-  } catch (Error) {
-    toast.error(Error);
-  }
+  } catch (Error) {}
 });
 
 const userSlice = createSlice({
@@ -42,9 +38,7 @@ const userSlice = createSlice({
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       state.data = state.data.filter((user) => user.userId !== action.payload);
     });
-    builder.addCase(deleteUser.rejected, (state, action) => {
-      toast.error(action.payload);
-    });
+    builder.addCase(deleteUser.rejected, (state, action) => {});
   },
 });
 

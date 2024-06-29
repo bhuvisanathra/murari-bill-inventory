@@ -4,7 +4,6 @@ import { CiViewBoard } from "react-icons/ci";
 import SwitchButtons from "../components/SwitchButtons";
 import CustomDialog from "../components/UserDialog";
 import ConfirmationDialog from "../components/ConfirmationDialog ";
-import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, fetchUser } from "../features/User/userSlice";
 
@@ -41,20 +40,6 @@ export const ViewUser = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        className="min-w-fit"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition={Bounce}
-      />
       <SwitchButtons />
       <div className="flex bg-white flex-col justify-center m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl">
         <h3 className="font-bold text-2xl mt-3 mb-5 relative border-b-2">
